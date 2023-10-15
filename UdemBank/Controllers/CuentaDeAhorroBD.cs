@@ -8,7 +8,7 @@ using Spectre.Console;
 
 namespace UdemBank
 {
-    public class CuentaDeAhorrosBD
+    public class CuentaDeAhorroBD
     {
     }
 }
