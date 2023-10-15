@@ -48,6 +48,16 @@ namespace UdemBank
         {
             CrearGrupoDeAhorro,
             SeleccionarUnGrupoDeAhorro,
+            Salir
+        }
+
+        enum MenuSeleccionarGrupoDeAhorro
+        {
+            //Lista de grupos de ahorro
+        }
+
+        enum MenuGrupoDeAhorro
+        {
             InvitarUsuarioAGrupoDeAhorro,
             DisolverGrupoDeAhorro,
             IngresarCapitalAGrupoDeAhorro,
@@ -181,10 +191,25 @@ namespace UdemBank
                 .AddChoices(
                     MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro,
                     MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro,
-                    MenuGestionarGruposDeAhorro.InvitarUsuarioAGrupoDeAhorro,
-                    MenuGestionarGruposDeAhorro.DisolverGrupoDeAhorro,
-                    MenuGestionarGruposDeAhorro.IngresarCapitalAGrupoDeAhorro,
                     MenuGestionarGruposDeAhorro.Salir
+                    ));
+        }
+
+        public static void GestionarMenuSeleccionarGrupoDeAhorro()
+        {
+            //Pol como hago esto
+        }
+
+        public static void GestionarMenuGrupoDeAhorro()
+        {
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<MenuGrupoDeAhorro>()
+                .Title("Qué quieres hacer?")
+                .AddChoices(
+                    MenuGrupoDeAhorro.InvitarUsuarioAGrupoDeAhorro,
+                    MenuGrupoDeAhorro.DisolverGrupoDeAhorro,
+                    MenuGrupoDeAhorro.IngresarCapitalAGrupoDeAhorro,
+                    MenuGrupoDeAhorro.Salir
                     ));
         }
 
