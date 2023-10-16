@@ -9,5 +9,10 @@ namespace UdemBank
 {
     public class UsuarioXGrupoAhorro
     {
+        public int id { get; set; }
+        public int id_ParticipanteGrupo { get; set; }
+        public int id_GrupoAhorro { get; set; }
+        public DateOnly ReleaseDate { get; set; }
+        public bool PerteneceAlGrupo { get; set; }
     }
 }

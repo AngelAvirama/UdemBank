@@ -9,5 +9,10 @@ namespace UdemBank
 {
     public class Prestamo
     {
+        public int id { get; set; }
+        public int id_usuarioXGrupoDeAhorro { get; set; }
+        public double CantidadPrestamo { get; set; }
+        public DateOnly fecha { get; set; }
+        public string PlazoPago { get; set; }
     }
 }

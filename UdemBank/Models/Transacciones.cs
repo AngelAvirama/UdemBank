@@ -9,5 +9,8 @@ namespace UdemBank
 {
     public class Transacciones
     {
+        public int id { get; set; }
+        public int id_usuario { get; set; }
+        public double CantidadPrestamo { get; set; }
     }
 }

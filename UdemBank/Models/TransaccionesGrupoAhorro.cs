@@ -9,5 +9,10 @@ namespace UdemBank
 {
     public class TransaccionesGrupoAhorro
     {
+        public int id { get; set; }
+        public int idUsuarioXGrupo { get; set; }
+        public double CantidadTransaccion { get; set; }
+        public DateOnly fecha { get; set; }
+        public string TipoTransaccion { get; set; }
     }
 }
