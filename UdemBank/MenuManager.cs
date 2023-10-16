@@ -136,7 +136,7 @@ namespace UdemBank
             switch (option)
             {
                 case MenuRegistrarse.CrearCuenta:
-                    CrearCuenta();
+                    UsuarioBD.CrearCuenta();
                     break;
                 case MenuRegistrarse.Salir:
                     SalirMenuInicial();
@@ -144,10 +144,6 @@ namespace UdemBank
             }
         }
 
-        public static void CrearCuenta()
-        {
-            //Phol como hago esto
-        }
         public static void Salir()
         {
             Console.WriteLine("¡Gracias por usar UdemBank");

@@ -8,8 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UdemBank
 {
-    public class Contexto
+    public class Contexto: DbContext
     {
-        
+        public DbSet<CuentaDeAhorro> CuentasDeAhorros { get; set; }
+
+        public DbSet<GrupoDeAhorro> GruposDeAhorros { get; set; }
+
+        public DbSet<TransaccionesGrupoAhorro> TransaccionesGruposAhorros { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+
+        public DbSet<UsuarioXGrupoAhorro> UsuariosXGruposAhorros { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite($"Data Source = UdemBank.db");
+        }
+
     }
 }
