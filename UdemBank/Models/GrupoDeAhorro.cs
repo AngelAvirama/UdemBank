@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,15 +9,8 @@ namespace UdemBank
 {
     public class GrupoDeAhorro
     {
-        [Key]
-        public int Id { get; set; }
-
-        public int idCreadorGrupo { get; set; }
-        [ForeignKey(nameof(idCreadorGrupo))]
-
-        public Usuario Usuario { get; set; }
-
-        [Required]
+        public int id { get; set; }
+        public int id_CreadorGrupo { get; set; }
         public double SaldoGrupo { get; set; }
     }
 }
