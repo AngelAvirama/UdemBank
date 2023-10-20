@@ -6,11 +6,39 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UdemBank.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class createDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "CuentasDeAhorros",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    id_propietario = table.Column<int>(type: "INTEGER", nullable: false),
+                    saldo = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CuentasDeAhorros", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GruposDeAhorros",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    id_CreadorGrupo = table.Column<int>(type: "INTEGER", nullable: false),
+                    SaldoGrupo = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GruposDeAhorros", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
@@ -23,46 +51,6 @@ namespace UdemBank.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CuentasDeAhorros",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
-                    saldo = table.Column<double>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CuentasDeAhorros", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CuentasDeAhorros_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GruposDeAhorros",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    idCreadorGrupo = table.Column<int>(type: "INTEGER", nullable: false),
-                    SaldoGrupo = table.Column<double>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GruposDeAhorros", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GruposDeAhorros_Usuarios_idCreadorGrupo",
-                        column: x => x.idCreadorGrupo,
-                        principalTable: "Usuarios",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,7 +71,7 @@ namespace UdemBank.Migrations
                         name: "FK_UsuariosXGruposAhorros_GruposDeAhorros_id_GrupoAhorro",
                         column: x => x.id_GrupoAhorro,
                         principalTable: "GruposDeAhorros",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UsuariosXGruposAhorros_Usuarios_id_ParticipanteGrupo",
@@ -114,16 +102,6 @@ namespace UdemBank.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CuentasDeAhorros_UsuarioId",
-                table: "CuentasDeAhorros",
-                column: "UsuarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GruposDeAhorros_idCreadorGrupo",
-                table: "GruposDeAhorros",
-                column: "idCreadorGrupo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransaccionesGruposAhorros_idUsuarioXGrupo",

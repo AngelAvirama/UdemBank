@@ -19,38 +19,34 @@ namespace UdemBank.Migrations
 
             modelBuilder.Entity("UdemBank.CuentaDeAhorro", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("id_propietario")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("saldo")
                         .HasColumnType("REAL");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
+                    b.HasKey("id");
 
                     b.ToTable("CuentasDeAhorros");
                 });
 
             modelBuilder.Entity("UdemBank.GrupoDeAhorro", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("SaldoGrupo")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("idCreadorGrupo")
+                    b.Property<int>("id_CreadorGrupo")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("idCreadorGrupo");
+                    b.HasKey("id");
 
                     b.ToTable("GruposDeAhorros");
                 });
@@ -125,28 +121,6 @@ namespace UdemBank.Migrations
                     b.HasIndex("id_ParticipanteGrupo");
 
                     b.ToTable("UsuariosXGruposAhorros");
-                });
-
-            modelBuilder.Entity("UdemBank.CuentaDeAhorro", b =>
-                {
-                    b.HasOne("UdemBank.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("UdemBank.GrupoDeAhorro", b =>
-                {
-                    b.HasOne("UdemBank.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("idCreadorGrupo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("UdemBank.TransaccionesGrupoAhorro", b =>

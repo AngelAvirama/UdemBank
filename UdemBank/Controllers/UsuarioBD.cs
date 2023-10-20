@@ -17,9 +17,9 @@ namespace UdemBank
             var Clave = AnsiConsole.Ask<string>("Ingresa una clave:");
 
             using var db = new Contexto(); //Conexión a la BD --> contexto
-            db.Add(new Usuario { nombre = Nombre, clave = Clave});
+            db.Usuarios.Add(new Usuario { nombre = Nombre, clave = Clave});
             db.SaveChanges();
-            MenuManager.MainMenuManagement();
+            //MenuManager.MainMenuManagement();
         }
     }
 }
