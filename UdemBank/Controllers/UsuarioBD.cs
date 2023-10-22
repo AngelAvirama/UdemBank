@@ -19,7 +19,7 @@ namespace UdemBank
             using var db = new Contexto(); //Conexión a la BD --> contexto
             db.Usuarios.Add(new Usuario { nombre = Nombre, clave = Clave});
             db.SaveChanges();
-            //MenuManager.MainMenuManagement();
+            MenuManager.MainMenuManagement();
         }
     }
 }
