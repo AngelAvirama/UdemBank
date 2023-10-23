@@ -11,8 +11,8 @@ using UdemBank;
 namespace UdemBank.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20231019190428_createDB")]
-    partial class createDB
+    [Migration("20231023032255_new-migration-again")]
+    partial class newmigrationagain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

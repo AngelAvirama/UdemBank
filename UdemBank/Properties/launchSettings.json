@@ -2,7 +2,7 @@
   "profiles": {
     "UdemBank": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\avira\\source\\repos\\UdemBank\\UdemBank",
+      "workingDirectory": "C:\\Users\\pholc\\Source\\Repos\\UdemBank\\UdemBank",
       "remoteDebugEnabled": false
     }
   }

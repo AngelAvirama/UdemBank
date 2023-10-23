@@ -21,5 +21,29 @@ namespace UdemBank
             var usuario = UsuarioBD.ObtenerUsuarioPorId(id);
             return usuario;
         }
+
+
+        public static Usuario Acceder()
+        {
+            Usuario usuario = ObtenerListaUsuarios();
+            String claveIngresada;
+            do
+            {
+                claveIngresada = AnsiConsole.Ask<string>("Ingresa tu clave: ");
+
+                if (claveIngresada == usuario.clave)
+                {
+                    Console.WriteLine("Accediendo al sistema...");
+                }
+                else
+                {
+                    Console.WriteLine("Grave... Clave incorrecta.");
+                }
+
+            } while (claveIngresada != usuario.clave);
+
+            return usuario;
+            
+        }
     }
 }
