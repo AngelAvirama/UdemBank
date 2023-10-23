@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using Spectre.Console;
 
 namespace UdemBank
@@ -17,8 +18,12 @@ namespace UdemBank
             var Clave = AnsiConsole.Ask<string>("Ingresa una clave:");
 
             using var db = new Contexto(); //Conexión a la BD --> contexto
-            db.Usuarios.Add(new Usuario { nombre = Nombre, clave = Clave});
+            var nuevoUsuario = new Usuario { nombre = Nombre, clave = Clave };
+            db.Usuarios.Add(nuevoUsuario);
             db.SaveChanges();
+
+            int nuevoUsuarioId = nuevoUsuario.id;
+            CuentaDeAhorroBD.CrearCuentaDeAhorro(nuevoUsuarioId);
             MenuManager.MainMenuManagement();
         }
 
