@@ -22,13 +22,15 @@ namespace UdemBank
             return usuario;
         }
 
-
         public static Usuario Acceder()
         {
-            Usuario usuario = ObtenerListaUsuarios();
+
             String claveIngresada;
+            Usuario usuario;
             do
             {
+                usuario = ObtenerListaUsuarios();
+                
                 claveIngresada = AnsiConsole.Ask<string>("Ingresa tu clave: ");
 
                 if (claveIngresada == usuario.clave)
@@ -39,7 +41,6 @@ namespace UdemBank
                 {
                     Console.WriteLine("Grave... Clave incorrecta.");
                 }
-
             } while (claveIngresada != usuario.clave);
 
             return usuario;

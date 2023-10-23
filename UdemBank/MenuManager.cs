@@ -24,24 +24,15 @@ namespace UdemBank
             Salir
         }
 
-        enum MenuIniciarSesion
-        {
-            //Lista de usuarios
-            Salir
-        }
+        
         enum MenuUsuario
         {
             MiCuenta,
-            GestionarMisGruposDeAhorro, 
-            Prestamos,
-            SalirDeCuenta
-        }
-
-        enum MenuMiCuenta
-        {
-            PagarDeudas,
+            Pagar,
             HistorialMovimientos,
-            Salir
+            Prestamos,
+            GestionarMisGruposDeAhorro, 
+            SalirDeCuenta
         }
 
         enum MenuGestionarGruposDeAhorro
@@ -84,6 +75,7 @@ namespace UdemBank
         public static void MainMenuManagement()
         {
             //Menú principal
+            Console.Clear();
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<MainMenuOptions>()
                 .Title("Bienvenido a UdemBank \nQué quieres hacer?")
@@ -96,13 +88,15 @@ namespace UdemBank
             switch (option)
             {
                 case MainMenuOptions.IniciarSesion:
-                    Login.ObtenerListaUsuarios();
+                    Usuario usuario = Login.Acceder();
+                    GestionarMenuUsuario(usuario);
                     break;
                 case MainMenuOptions.Registrarse:
                     GestionarMenuRegistrarse();
                     break;
                 case MainMenuOptions.Salir:
-                    Salir();
+
+                    Console.WriteLine("¡Gracias por usar UdemBank!");
                     break;
             }
         }
@@ -137,47 +131,51 @@ namespace UdemBank
             {
                 case MenuRegistrarse.CrearCuenta:
                     UsuarioBD.CrearCuenta();
+                    
                     break;
                 case MenuRegistrarse.Salir:
-                    SalirMenuInicial();
+                    MainMenuManagement();
                     break;
             }
         }
 
-        public static void Salir()
-        {
-            Console.WriteLine("¡Gracias por usar UdemBank");
-        }
 
-        public static void SalirMenuInicial()
-        {
-            MainMenuManagement();
-        }
 
-        public static void GestionarMenuUsuario()
+        
+
+        public static void GestionarMenuUsuario(Usuario usuario)
         {
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<MenuUsuario>()
                 .Title("Qué quieres hacer?")
                 .AddChoices(
                     MenuUsuario.MiCuenta,
-                    MenuUsuario.GestionarMisGruposDeAhorro,
+                    MenuUsuario.Pagar,
+                    MenuUsuario.HistorialMovimientos,
                     MenuUsuario.Prestamos,
+                    MenuUsuario.GestionarMisGruposDeAhorro,
                     MenuUsuario.SalirDeCuenta
                     ));
+            switch (option)
+            {
+                case MenuUsuario.MiCuenta:
+
+                    break;
+                case MenuUsuario.Pagar:
+                    break;
+                case MenuUsuario.HistorialMovimientos:
+                    break;
+                case MenuUsuario.Prestamos:
+                    break;
+                case MenuUsuario.GestionarMisGruposDeAhorro:
+                    break;
+                case MenuUsuario.SalirDeCuenta:
+                    MainMenuManagement();
+                    break;
+            }
         }
 
-        public static void GestionarMenuMiCuenta()
-        {
-            var option = AnsiConsole.Prompt(
-                new SelectionPrompt<MenuMiCuenta>()
-                .Title("Qué quieres hacer?")
-                .AddChoices(
-                    MenuMiCuenta.PagarDeudas,
-                    MenuMiCuenta.HistorialMovimientos,
-                    MenuMiCuenta.Salir
-                    ));
-        }
+       
 
         public static void GestionarMenuGestionarMisGruposDeAhorro()
         {
@@ -210,11 +208,6 @@ namespace UdemBank
         }
 
         public static void GestionarMenuPrestamos()
-        {
-
-        }
-
-        public static void SalirCuenta()
         {
 
         }

@@ -24,6 +24,7 @@ namespace UdemBank
 
             int nuevoUsuarioId = nuevoUsuario.id;
             CuentaDeAhorroBD.CrearCuentaDeAhorro(nuevoUsuarioId);
+
             MenuManager.MainMenuManagement();
         }
 
