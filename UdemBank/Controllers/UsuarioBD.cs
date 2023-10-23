@@ -41,5 +41,17 @@ namespace UdemBank
             var usuario = db.Usuarios.SingleOrDefault(u => u.id == id);
             return usuario;
         }
+
+        public static void MostrarInformacionCuenta(Usuario usuario)
+        {
+            using var db = new Contexto();
+            var cuentaDeAhorro = db.CuentasDeAhorros.SingleOrDefault(ca => ca.id_propietario == usuario.id);
+
+            Console.Clear();
+            Console.WriteLine($"El propietario de la cuenta es: {usuario.nombre}");
+            Console.WriteLine($"El saldo de la cuenta es: {cuentaDeAhorro.saldo}");
+            Console.WriteLine();
+            MenuManager.GestionarMenuUsuario(usuario);
+        }
     }
 }

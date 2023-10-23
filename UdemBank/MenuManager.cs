@@ -159,7 +159,7 @@ namespace UdemBank
             switch (option)
             {
                 case MenuUsuario.MiCuenta:
-
+                    UsuarioBD.MostrarInformacionCuenta(usuario);
                     break;
                 case MenuUsuario.Pagar:
                     break;
