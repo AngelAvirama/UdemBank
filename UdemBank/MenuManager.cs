@@ -96,7 +96,7 @@ namespace UdemBank
             switch (option)
             {
                 case MainMenuOptions.IniciarSesion:
-                    GestionarMenuIniciarSesion();
+                    Login.ObtenerListaUsuarios();
                     break;
                 case MainMenuOptions.Registrarse:
                     GestionarMenuRegistrarse();
@@ -107,13 +107,13 @@ namespace UdemBank
             }
         }
 
-        public static void GestionarMenuIniciarSesion()
+        /*public static void GestionarMenuIniciarSesion()
         {
             var option = AnsiConsole.Prompt(
             new SelectionPrompt<MenuIniciarSesion>()
             .Title("Selecciona tu usuario")
             .AddChoices(
-                //Help
+                Login.ObtenerListaUsuarios(),
                 MenuIniciarSesion.Salir));
 
             switch (option)
@@ -122,7 +122,7 @@ namespace UdemBank
                     SalirMenuInicial();
                     break;
             }
-        }
+        }*/
 
         public static void GestionarMenuRegistrarse()
         {

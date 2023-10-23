@@ -21,5 +21,19 @@ namespace UdemBank
             db.SaveChanges();
             MenuManager.MainMenuManagement();
         }
+
+        public static List<Usuario> ObtenerUsuarios()
+        {
+            using var db = new Contexto();
+            var usuarios = db.Usuarios.ToList();
+            return usuarios;
+        }
+
+        public static Usuario ObtenerUsuarioPorId(int id)
+        {
+            using var db = new Contexto();
+            var usuario = db.Usuarios.SingleOrDefault(u => u.id == id);
+            return usuario;
+        }
     }
 }
