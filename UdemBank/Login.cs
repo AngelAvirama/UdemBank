@@ -18,8 +18,8 @@ namespace UdemBank
                 .AddChoices(ListaUsuarios));
 
             var id = usuarios.Single(x => x.nombre == opcion).id;
-            var libraryUser = UsuarioBD.ObtenerUsuarioPorId(id);
-            return libraryUser;
+            var usuario = UsuarioBD.ObtenerUsuarioPorId(id);
+            return usuario;
         }
     }
 }
