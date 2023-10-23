@@ -168,6 +168,7 @@ namespace UdemBank
                 case MenuUsuario.Prestamos:
                     break;
                 case MenuUsuario.GestionarMisGruposDeAhorro:
+                    GestionarMenuGestionarMisGruposDeAhorro(usuario);
                     break;
                 case MenuUsuario.SalirDeCuenta:
                     MainMenuManagement();
@@ -177,7 +178,7 @@ namespace UdemBank
 
        
 
-        public static void GestionarMenuGestionarMisGruposDeAhorro()
+        public static void GestionarMenuGestionarMisGruposDeAhorro(Usuario usuario)
         {
               var option = AnsiConsole.Prompt(  
                 new SelectionPrompt<MenuGestionarGruposDeAhorro>()
@@ -187,6 +188,17 @@ namespace UdemBank
                     MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro,
                     MenuGestionarGruposDeAhorro.Salir
                     ));
+            switch (option)
+            {
+                case MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro:
+                    GrupoDeAhorroBD.CrearGrupoDeAhorro(usuario.id);
+                    break;
+                case MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro:
+                    break;
+                case MenuGestionarGruposDeAhorro.Salir:
+                    GestionarMenuUsuario(usuario);
+                    break;
+            }
         }
 
         public static void GestionarMenuSeleccionarGrupoDeAhorro()
@@ -194,7 +206,7 @@ namespace UdemBank
             //Pol como hago esto
         }
 
-        public static void GestionarMenuGrupoDeAhorro()
+        public static void GestionarMenuGrupoDeAhorro(Usuario usuario)
         {
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<MenuGrupoDeAhorro>()

@@ -46,5 +46,18 @@ namespace UdemBank
             return usuario;
             
         }
+
+        public static Usuario ObtenerListaGruposDeAhorro()
+        {
+            var usuarios = UsuarioBD.ObtenerUsuarios();
+            var ListaUsuarios = usuarios.Select(x => x.nombre).ToArray();
+            var opcion = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                .Title("Selecciona un usuario")
+                .AddChoices(ListaUsuarios));
+
+            var id = usuarios.Single(x => x.nombre == opcion).id;
+            var usuario = UsuarioBD.ObtenerUsuarioPorId(id);
+            return usuario;
+        }
     }
 }
