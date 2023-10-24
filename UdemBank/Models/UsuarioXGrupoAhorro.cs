@@ -25,9 +25,6 @@ namespace UdemBank
         public GrupoDeAhorro GrupoDeAhorro { get; set; }
 
         [Required]
-        public DateOnly ReleaseDate { get; set; }
-
-        [Required]
         public bool PerteneceAlGrupo { get; set; }
     }
 }

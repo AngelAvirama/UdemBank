@@ -18,5 +18,27 @@ namespace UdemBank
             db.CuentasDeAhorros.Add(new CuentaDeAhorro { id_propietario = id, saldo  = Saldo });
             db.SaveChanges();
         }
+
+        public static void IngresarCapital(Usuario usuario)
+        {
+            using var db = new Contexto();
+
+            var cuentaDeAhorro = db.CuentasDeAhorros.SingleOrDefault(x => x.id_propietario == usuario.id);
+            var saldoIngresado = AnsiConsole.Ask<double>("Ingresa la cantidad de saldo: ");
+
+            if (saldoIngresado <= 0)
+            {
+                Console.WriteLine("Saldo invalido");
+                MenuManager.GestionarMenuMiCuenta(usuario);
+            }
+            else
+            {
+                cuentaDeAhorro.saldo += saldoIngresado;
+                db.SaveChanges();
+                Console.WriteLine("El saldo se ha actualizado correctamente");
+                MenuManager.GestionarMenuUsuario(usuario);
+            }
+
+        }
     }
 }

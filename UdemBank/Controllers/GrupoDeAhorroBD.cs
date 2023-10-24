@@ -9,13 +9,38 @@ namespace UdemBank
 {
     public class GrupoDeAhorroBD
     {
-        public static void CrearGrupoDeAhorro(int id)
+        public static void CrearGrupoDeAhorro(Usuario usuario)
         {
-            //var Saldo = AnsiConsole.Ask<double>("Ingresa tu saldo inicial: ");
-
+            var nombreGrupo = AnsiConsole.Ask<string>("Ingresa un nombre para el grupo de ahorro: ");
+            
             using var db = new Contexto(); //Conexión a la BD --> contexto
-            db.GruposDeAhorros.Add(new GrupoDeAhorro { id_CreadorGrupo = id, SaldoGrupo = id });
+            var grupoAhorro = new GrupoDeAhorro { id_CreadorGrupo = usuario.id, SaldoGrupo = 0, NombreGrupo = nombreGrupo };
+
+            db.GruposDeAhorros.Add(grupoAhorro );
             db.SaveChanges();
+
+            UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuario.id, grupoAhorro.id);
+            MenuManager.GestionarMenuMisGruposDeAhorro(usuario);
+        }
+
+        public static List<GrupoDeAhorro> ObtenerGruposAhorro(List<int> listId)
+        {
+            using var db = new Contexto();
+            List<GrupoDeAhorro> Grupos = new List<GrupoDeAhorro>();
+            foreach (int id in listId) {
+                
+                GrupoDeAhorro grupo = db.GruposDeAhorros.Single(g => g.id == id);
+                Grupos.Add(grupo);
+            }
+            return Grupos;
+        }
+
+        public static GrupoDeAhorro ObtenerGrupoAhorroId(int id)
+        {
+            using var db = new Contexto();
+            var grupo = db.GruposDeAhorros.SingleOrDefault(u => u.id == id);
+            return grupo;
         }
     }
+
 }

@@ -35,16 +35,17 @@ namespace UdemBank
             SalirDeCuenta
         }
 
+        enum MenuMiCuenta
+        {
+            IngresarSaldoACuentaDeAhorro,
+            Salir
+        }
+
         enum MenuGestionarGruposDeAhorro
         {
             CrearGrupoDeAhorro,
             SeleccionarUnGrupoDeAhorro,
             Salir
-        }
-
-        enum MenuSeleccionarGrupoDeAhorro
-        {
-            //Lista de grupos de ahorro
         }
 
         enum MenuGrupoDeAhorro
@@ -168,7 +169,7 @@ namespace UdemBank
                 case MenuUsuario.Prestamos:
                     break;
                 case MenuUsuario.GestionarMisGruposDeAhorro:
-                    GestionarMenuGestionarMisGruposDeAhorro(usuario);
+                    GestionarMenuMisGruposDeAhorro(usuario);
                     break;
                 case MenuUsuario.SalirDeCuenta:
                     MainMenuManagement();
@@ -176,10 +177,30 @@ namespace UdemBank
             }
         }
 
-       
-
-        public static void GestionarMenuGestionarMisGruposDeAhorro(Usuario usuario)
+        public static void GestionarMenuMiCuenta(Usuario usuario)
         {
+            var option = AnsiConsole.Prompt(
+                new SelectionPrompt<MenuMiCuenta>()
+                .Title("Qué quieres hacer?")
+                .AddChoices(
+                    MenuMiCuenta.IngresarSaldoACuentaDeAhorro,
+                    MenuMiCuenta.Salir
+                    ));
+
+            switch (option)
+            {
+                case MenuMiCuenta.IngresarSaldoACuentaDeAhorro:
+                    CuentaDeAhorroBD.IngresarCapital(usuario);
+                    break;
+                case MenuMiCuenta.Salir:
+                    GestionarMenuUsuario(usuario);
+                    break;
+            }
+        }
+
+        public static void GestionarMenuMisGruposDeAhorro(Usuario usuario)
+        {
+            Console.Clear();
               var option = AnsiConsole.Prompt(  
                 new SelectionPrompt<MenuGestionarGruposDeAhorro>()
                 .Title("Qué quieres hacer?")
@@ -191,9 +212,21 @@ namespace UdemBank
             switch (option)
             {
                 case MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro:
-                    GrupoDeAhorroBD.CrearGrupoDeAhorro(usuario.id);
+                    GrupoDeAhorroBD.CrearGrupoDeAhorro(usuario);
                     break;
                 case MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro:
+                    GrupoDeAhorro miGrupo = Login.SeleccionarMiGrupoAhorro(usuario.id);
+                    if (miGrupo != null)
+                    {
+                        GestionarMenuGrupoDeAhorro(usuario, miGrupo);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{usuario.nombre} no tiene grupos de ahorro");
+                        GestionarMenuMisGruposDeAhorro(usuario);
+                    }
+                    
+
                     break;
                 case MenuGestionarGruposDeAhorro.Salir:
                     GestionarMenuUsuario(usuario);
@@ -201,12 +234,7 @@ namespace UdemBank
             }
         }
 
-        public static void GestionarMenuSeleccionarGrupoDeAhorro()
-        {
-            //Pol como hago esto
-        }
-
-        public static void GestionarMenuGrupoDeAhorro(Usuario usuario)
+        public static void GestionarMenuGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupo)
         {
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<MenuGrupoDeAhorro>()
@@ -217,6 +245,20 @@ namespace UdemBank
                     MenuGrupoDeAhorro.IngresarCapitalAGrupoDeAhorro,
                     MenuGrupoDeAhorro.Salir
                     ));
+
+            switch (option)
+            {
+                case MenuGrupoDeAhorro.InvitarUsuarioAGrupoDeAhorro:
+                    break;
+                case MenuGrupoDeAhorro.DisolverGrupoDeAhorro:
+                    break;
+                case MenuGrupoDeAhorro.IngresarCapitalAGrupoDeAhorro:
+                    UsuarioXGrupoAhorroBD.IngresarCapitalAGrupoDeAhorro(usuario, grupo);
+                    break;
+                case MenuGrupoDeAhorro.Salir:
+                    GestionarMenuMisGruposDeAhorro(usuario);
+                    break;
+            }
         }
 
         public static void GestionarMenuPrestamos()
