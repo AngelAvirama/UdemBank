@@ -200,7 +200,6 @@ namespace UdemBank
 
         public static void GestionarMenuMisGruposDeAhorro(Usuario usuario)
         {
-            Console.Clear();
               var option = AnsiConsole.Prompt(  
                 new SelectionPrompt<MenuGestionarGruposDeAhorro>()
                 .Title("Qué quieres hacer?")
@@ -233,7 +232,7 @@ namespace UdemBank
                     break;
             }
         }
-
+       
         public static void GestionarMenuGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupo)
         {
             var option = AnsiConsole.Prompt(
