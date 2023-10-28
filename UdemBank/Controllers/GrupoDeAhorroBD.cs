@@ -41,6 +41,20 @@ namespace UdemBank
             var grupo = db.GruposDeAhorros.SingleOrDefault(u => u.id == id);
             return grupo;
         }
+
+        public static void IncrementarSaldo(int id,double saldo)
+        {
+            using var db = new Contexto();
+            var grupo = db.GruposDeAhorros.SingleOrDefault(u => u.id == id);
+            //var grupo = ObtenerGrupoAhorroId(id);
+            grupo.SaldoGrupo += saldo;
+            db.SaveChanges();
+            
+
+
+        }
     }
+
+        
 
 }

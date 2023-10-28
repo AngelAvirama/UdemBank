@@ -39,7 +39,9 @@ namespace UdemBank
 
             if (cuentaDeAhorro.saldo >= saldoIngresado)
             {
-                grupoDeAhorro.SaldoGrupo += saldoIngresado;
+                //grupoDeAhorro.SaldoGrupo += saldoIngresado;
+                GrupoDeAhorroBD.IncrementarSaldo(grupoDeAhorro.id, saldoIngresado);
+
                 cuentaDeAhorro.saldo -= saldoIngresado;
                 db.SaveChanges();
                 Console.WriteLine("Saldo ingresado exitosamente");
