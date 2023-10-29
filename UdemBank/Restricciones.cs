@@ -26,17 +26,5 @@ namespace UdemBank
                 return false;
             }
         }
-
-        public static bool InvitacionesSuficientes(int Invitaciones)
-        {
-            if (Invitaciones <= 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
     }
 }

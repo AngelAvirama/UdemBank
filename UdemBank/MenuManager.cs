@@ -248,16 +248,8 @@ namespace UdemBank
             switch (option)
             {
                 case MenuGrupoDeAhorro.InvitarUsuarioAGrupoDeAhorro:
-                    bool PuedeInvitar = Restricciones.InvitacionesSuficientes(usuario.invitaciones);
-                    if (PuedeInvitar == false)
-                    {
-                        Console.WriteLine("Ya no puedes invitar a mas personas");
-                    }
-                    else
-                    {
-                        Usuario usuarioInvitado = Login.ObtenerListaUsuarios(usuario.id);
-                        GrupoDeAhorroBD.IngresarUsuarioAGrupoDeAhorro(usuarioInvitado, grupo);
-                    }
+                    Usuario usuarioInvitado = Login.ObtenerListaUsuarios(usuario.id);
+                    GrupoDeAhorroBD.IngresarUsuarioAGrupoDeAhorro(usuarioInvitado, grupo);
                     break;
                 case MenuGrupoDeAhorro.DisolverGrupoDeAhorro:
                     break;
