@@ -63,28 +63,28 @@ namespace UdemBank
 
         }
 
-        public static void IngresarUsuarioAGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupoDeAhorro)
+        public static void IngresarUsuarioAGrupoDeAhorro(Usuario usuario, Usuario usuarioInvitado, GrupoDeAhorro grupoDeAhorro)
         {
             using var db = new Contexto();
 
             // Verifica si el usuario ya pertenece al grupo de ahorro
-            var Pertenece = db.UsuariosXGruposAhorros.SingleOrDefault(ug => ug.id_ParticipanteGrupo == usuario.id && ug.id_GrupoAhorro == grupoDeAhorro.id);
+            var Pertenece = db.UsuariosXGruposAhorros.SingleOrDefault(ug => ug.id_ParticipanteGrupo == usuarioInvitado.id && ug.id_GrupoAhorro == grupoDeAhorro.id);
 
             if (Pertenece != null)
             {
-                Console.WriteLine($"{usuario.nombre} ya es miembro del grupo de ahorro {grupoDeAhorro.NombreGrupo}.");
+                Console.WriteLine($"{usuarioInvitado.nombre} ya es miembro del grupo de ahorro {grupoDeAhorro.NombreGrupo}.");
             }
             else
             {
-                bool MaximoGruposDeAhorro = Restricciones.TieneMaximoGruposAhorro(usuario.id);
+                bool MaximoGruposDeAhorro = Restricciones.TieneMaximoGruposAhorro(usuarioInvitado.id);
                 if (MaximoGruposDeAhorro == true)
                 {
-                    Console.WriteLine($"El usuario {usuario.nombre} ya no puede estar en más grupos de ahorro");
+                    Console.WriteLine($"El usuario {usuarioInvitado.nombre} ya no puede estar en más grupos de ahorro");
                 }
                 else
                 {
-                    UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuario.id, grupoDeAhorro.id);
-                    Console.WriteLine($"{usuario.nombre} ha sido agregado al grupo de ahorro {grupoDeAhorro.NombreGrupo}");
+                    UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuarioInvitado.id, grupoDeAhorro.id);
+                    Console.WriteLine($"{usuarioInvitado.nombre} ha sido agregado al grupo de ahorro {grupoDeAhorro.NombreGrupo}");
                 }
             }
             MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);

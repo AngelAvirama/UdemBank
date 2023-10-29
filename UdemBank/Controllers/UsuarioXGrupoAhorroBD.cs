@@ -9,11 +9,11 @@ namespace UdemBank
 {
     public class UsuarioXGrupoAhorroBD
     {
-        public static void UnirseAGrupoDeAhorro(int idUsuario,int idGrupo)
+        public static void UnirseAGrupoDeAhorro(int idUsuario, int idGrupo)
         {
             using var db = new Contexto(); //Conexión a la BD --> contexto
 
-            db.UsuariosXGruposAhorros.Add(new UsuarioXGrupoAhorro{ id_ParticipanteGrupo= idUsuario, id_GrupoAhorro = idGrupo, PerteneceAlGrupo = true});
+            db.UsuariosXGruposAhorros.Add(new UsuarioXGrupoAhorro { id_ParticipanteGrupo = idUsuario, id_GrupoAhorro = idGrupo, PerteneceAlGrupo = true });
             db.SaveChanges();
         }
 
@@ -48,5 +48,23 @@ namespace UdemBank
                 MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);
             }
         }
+
+        public static void DisolverGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupoDeAhorro)
+        {
+            using var db = new Contexto();
+
+            var relacionesUsuarioXGrupo = db.UsuariosXGruposAhorros
+                .Where(ug => ug.id_GrupoAhorro == grupoDeAhorro.id)
+                .ToList();
+
+            db.UsuariosXGruposAhorros.RemoveRange(relacionesUsuarioXGrupo);
+            db.GruposDeAhorros.Remove(grupoDeAhorro);
+
+            db.SaveChanges();
+
+            Console.WriteLine("El grupo se ha eliminado exitosamente");
+            MenuManager.GestionarMenuMisGruposDeAhorro(usuario);
+        }
+
     }
 }

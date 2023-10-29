@@ -249,9 +249,10 @@ namespace UdemBank
             {
                 case MenuGrupoDeAhorro.InvitarUsuarioAGrupoDeAhorro:
                     Usuario usuarioInvitado = Login.ObtenerListaUsuarios(usuario.id);
-                    GrupoDeAhorroBD.IngresarUsuarioAGrupoDeAhorro(usuarioInvitado, grupo);
+                    GrupoDeAhorroBD.IngresarUsuarioAGrupoDeAhorro(usuario, usuarioInvitado, grupo);
                     break;
                 case MenuGrupoDeAhorro.DisolverGrupoDeAhorro:
+                    UsuarioXGrupoAhorroBD.DisolverGrupoDeAhorro(usuario, grupo);
                     break;
                 case MenuGrupoDeAhorro.IngresarCapitalAGrupoDeAhorro:
                     UsuarioXGrupoAhorroBD.IngresarCapitalAGrupoDeAhorro(usuario, grupo);
