@@ -22,7 +22,7 @@ namespace UdemBank
         {
             using var db = new Contexto();
 
-            List<UsuarioXGrupoAhorro> misGrupos = db.UsuariosXGruposAhorros.Where(x => x.id == idUsuario && x.PerteneceAlGrupo == true).ToList();
+            List<UsuarioXGrupoAhorro> misGrupos = db.UsuariosXGruposAhorros.Where(x => x.id_ParticipanteGrupo == idUsuario && x.PerteneceAlGrupo == true).ToList();
 
 
             return misGrupos;

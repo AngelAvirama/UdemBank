@@ -9,17 +9,39 @@ namespace UdemBank
 {
     public class Login
     {
-        public static Usuario ObtenerListaUsuarios()
+        public static Usuario ObtenerListaUsuarios(int IdUsuario = -1)
         {
             var usuarios = UsuarioBD.ObtenerUsuarios();
-            var ListaUsuarios = usuarios.Select(x => x.nombre).ToArray();
-            var opcion = AnsiConsole.Prompt(new SelectionPrompt<string>()
-                .Title("Selecciona un usuario")
-                .AddChoices(ListaUsuarios));
 
-            var id = usuarios.Single(x => x.nombre == opcion).id;
-            var usuario = UsuarioBD.ObtenerUsuarioPorId(id);
-            return usuario;
+            if (IdUsuario == -1)
+            {
+                var ListaUsuarios = usuarios.Select(x => x.nombre).ToArray();
+                var opcion = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                    .Title("Selecciona un usuario")
+                    .AddChoices(ListaUsuarios));
+
+                var id = usuarios.Single(x => x.nombre == opcion).id;
+                var usuario = UsuarioBD.ObtenerUsuarioPorId(id);
+                return usuario;
+            }
+            else
+            {
+                var ListaUsuarios = usuarios.Where(u => u.id != IdUsuario).Select(x => x.nombre).ToArray();
+
+                if (ListaUsuarios.Length == 0)
+                {
+                    Console.WriteLine("No hay otros usuarios disponibles.");
+                    return null;
+                }
+
+                var opcion = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                    .Title("Selecciona un usuario")
+                    .AddChoices(ListaUsuarios));
+
+                var id = usuarios.Single(x => x.nombre == opcion).id;
+                var usuario = UsuarioBD.ObtenerUsuarioPorId(id);
+                return usuario;
+            }
         }
 
         public static Usuario Acceder()

@@ -9,5 +9,34 @@ namespace UdemBank
 {
     public class Restricciones
     {
+        public static bool TieneMaximoGruposAhorro(int idUsuario)
+        {
+            using var db = new Contexto();
+
+            int cantidadGruposAhorro = db.UsuariosXGruposAhorros
+                .Where(x => x.id_ParticipanteGrupo == idUsuario && x.PerteneceAlGrupo)
+                .Count();
+
+            if (cantidadGruposAhorro >= 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool InvitacionesSuficientes(int Invitaciones)
+        {
+            if (Invitaciones <= 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

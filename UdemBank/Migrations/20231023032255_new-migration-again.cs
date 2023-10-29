@@ -46,7 +46,7 @@ namespace UdemBank.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    clave = table.Column<string>(type: "TEXT", nullable: false)
+                    clave = table.Column<string>(type: "TEXT", nullable: false),
                 },
                 constraints: table =>
                 {

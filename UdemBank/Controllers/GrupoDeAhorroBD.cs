@@ -11,15 +11,24 @@ namespace UdemBank
     {
         public static void CrearGrupoDeAhorro(Usuario usuario)
         {
-            var nombreGrupo = AnsiConsole.Ask<string>("Ingresa un nombre para el grupo de ahorro: ");
+            bool MaximoGruposDeAhorro = Restricciones.TieneMaximoGruposAhorro(usuario.id);
+            if (MaximoGruposDeAhorro == true)
+            {
+                Console.WriteLine("Ya no puedes crear más grupos de ahorro");
+            }
+            else
+            {
+                var nombreGrupo = AnsiConsole.Ask<string>("Ingresa un nombre para el grupo de ahorro: ");
+
+                using var db = new Contexto(); //Conexión a la BD --> contexto
+                var grupoAhorro = new GrupoDeAhorro { id_CreadorGrupo = usuario.id, SaldoGrupo = 0, NombreGrupo = nombreGrupo };
+
+                db.GruposDeAhorros.Add(grupoAhorro);
+                db.SaveChanges();
+
+                UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuario.id, grupoAhorro.id);
+            }
             
-            using var db = new Contexto(); //Conexión a la BD --> contexto
-            var grupoAhorro = new GrupoDeAhorro { id_CreadorGrupo = usuario.id, SaldoGrupo = 0, NombreGrupo = nombreGrupo };
-
-            db.GruposDeAhorros.Add(grupoAhorro );
-            db.SaveChanges();
-
-            UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuario.id, grupoAhorro.id);
             MenuManager.GestionarMenuMisGruposDeAhorro(usuario);
         }
 
@@ -53,8 +62,36 @@ namespace UdemBank
 
 
         }
+
+        public static void IngresarUsuarioAGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupoDeAhorro)
+        {
+            using var db = new Contexto();
+
+            // Verifica si el usuario ya pertenece al grupo de ahorro
+            var Pertenece = db.UsuariosXGruposAhorros.SingleOrDefault(ug => ug.id_ParticipanteGrupo == usuario.id && ug.id_GrupoAhorro == grupoDeAhorro.id);
+
+            if (Pertenece != null)
+            {
+                Console.WriteLine($"{usuario.nombre} ya es miembro del grupo de ahorro {grupoDeAhorro.NombreGrupo}.");
+            }
+            else
+            {
+                bool MaximoGruposDeAhorro = Restricciones.TieneMaximoGruposAhorro(usuario.id);
+                if (MaximoGruposDeAhorro == true)
+                {
+                    Console.WriteLine($"El usuario {usuario.nombre} ya no puede estar en más grupos de ahorro");
+                }
+                else
+                {
+                    UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuario.id, grupoDeAhorro.id);
+                    Console.WriteLine($"{usuario.nombre} ha sido agregado al grupo de ahorro {grupoDeAhorro.NombreGrupo}");
+                }
+            }
+            MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);
+        }
+
     }
 
-        
+
 
 }

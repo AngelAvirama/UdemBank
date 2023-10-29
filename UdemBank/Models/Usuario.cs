@@ -18,5 +18,6 @@ namespace UdemBank
 
         [Required]
         public string clave { get; set; }
+        public int invitaciones { get; set; } = 2;
     }
 }
