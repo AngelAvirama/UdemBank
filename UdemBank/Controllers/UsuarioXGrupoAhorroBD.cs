@@ -28,6 +28,14 @@ namespace UdemBank
             return misGrupos;
         }
 
+
+        public static int ObtenerUsuarioXGrupoId(int idUsuario, int idGrupo)
+        {
+            using var db = new Contexto();
+            int idUsuarioXGrupo = db.UsuariosXGruposAhorros.Where(x => x.id_ParticipanteGrupo == idUsuario && x.id_GrupoAhorro == idGrupo).Select(x => x.id).FirstOrDefault();
+            return idUsuarioXGrupo;
+        }
+
         public static void IngresarCapitalAGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupoDeAhorro)
         {
             using var db = new Contexto();
@@ -43,7 +51,12 @@ namespace UdemBank
                 GrupoDeAhorroBD.IncrementarSaldo(grupoDeAhorro.id, saldoIngresado);
 
                 cuentaDeAhorro.saldo -= saldoIngresado;
+
                 db.SaveChanges();
+
+                int idUsuarioGrupo = ObtenerUsuarioXGrupoId(usuario.id, grupoDeAhorro.id);
+                TransaccionesGrupoAhorroBD.RegistrarTransaccionGrupo(idUsuarioGrupo, saldoIngresado, "Transaccion");
+
                 Console.WriteLine("Saldo ingresado exitosamente");
                 MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);
             }

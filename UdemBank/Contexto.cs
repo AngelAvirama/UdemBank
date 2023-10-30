@@ -15,6 +15,8 @@ namespace UdemBank
         public DbSet<GrupoDeAhorro> GruposDeAhorros { get; set; }
 
         public DbSet<TransaccionesGrupoAhorro> TransaccionesGruposAhorros { get; set; }
+
+        public DbSet<Prestamo> Prestamos {  get; set; }
         public DbSet<Usuario>Usuarios{ get; set; }
 
         public DbSet<UsuarioXGrupoAhorro> UsuariosXGruposAhorros { get; set; }

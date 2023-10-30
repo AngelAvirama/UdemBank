@@ -167,6 +167,7 @@ namespace UdemBank
                 case MenuUsuario.HistorialMovimientos:
                     break;
                 case MenuUsuario.Prestamos:
+                    GestionarMenuPrestamos(usuario);
                     break;
                 case MenuUsuario.GestionarMisGruposDeAhorro:
                     GestionarMenuMisGruposDeAhorro(usuario);
@@ -263,9 +264,42 @@ namespace UdemBank
             }
         }
 
-        public static void GestionarMenuPrestamos()
+        public static void GestionarMenuPrestamos(Usuario usuario)
         {
+            var option = AnsiConsole.Prompt(
+            new SelectionPrompt<MenuPrestamos>()
+            .Title("Te encuentras en el menu de Prestamos, ¿A que grupo deseas prestar? ")
+            .AddChoices(
+                MenuPrestamos.MisGruposDeAhorro,
+                MenuPrestamos.OtrosGrupos,
+                MenuPrestamos.Salir));
 
+            switch (option)
+            {
+                case MenuPrestamos.MisGruposDeAhorro:
+
+                    //Aqui quedó repetido, hay que organizarlo
+                    GrupoDeAhorro miGrupo = Login.SeleccionarMiGrupoAhorro(usuario.id);
+
+                    if (miGrupo != null)
+                    {
+                        PrestamoBD.PrestamoGrupoParticipante(usuario, miGrupo);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{usuario.nombre} no tiene grupos de ahorro");
+                        GestionarMenuUsuario(usuario);
+                    }
+
+
+                    break;
+                case MenuPrestamos.OtrosGrupos:
+                    
+                    break;
+                case MenuPrestamos.Salir:
+                    GestionarMenuUsuario(usuario);
+                    break;
+            }
         }
     }
 }

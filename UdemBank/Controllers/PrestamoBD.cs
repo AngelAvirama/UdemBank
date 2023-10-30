@@ -9,5 +9,61 @@ namespace UdemBank
 {
     public class PrestamoBD
     {
+
+        public static void PrestamoGrupoParticipante(Usuario usuario, GrupoDeAhorro grupo)
+        {
+            //Conexión a la BD --> contexto
+            (double SaldoPrestamo, int idUxG, int cantidadMeses)? tuplaDatos = PrestamoServicios.SolicitarCantidad(usuario, grupo); //Una tupla que me retorne el valor y el id usuarioxgrupo, cantidadMeses
+
+            if (tuplaDatos != null)
+            {
+
+                //Todos estos calculos hay que meterlos en otra funcion 
+                Console.WriteLine("Tupla datos no fue null");
+                double saldoPrestar = tuplaDatos.Value.SaldoPrestamo;
+                int idUsuarioGrupo = tuplaDatos.Value.idUxG;
+                int meses = tuplaDatos.Value.cantidadMeses;
+                Console.WriteLine($"Datos retornados por tupla:saldoprestar:{saldoPrestar}\nidUxG:{idUsuarioGrupo}\nmeses:{meses}");
+
+
+                DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
+                DateOnly fechaPago = DateOnly.FromDateTime(DateTime.Now).AddMonths(meses);
+
+
+                double cantidadPagar = saldoPrestar + (saldoPrestar * 0.03);
+                double cuota = cantidadPagar / 4;
+
+
+                using var db = new Contexto(); 
+                
+                db.Prestamos.Add(new Prestamo {id_usuarioXGrupoDeAhorro = idUsuarioGrupo,
+                                              cantidadPrestamo = saldoPrestar,
+                                              deudaActual = cantidadPagar,
+                                              cantidadCuota = cuota,
+                                              cantidadAPagar=cantidadPagar,
+                                              fechaPrestamo = fechaActual,
+                                              fechaPlazo = fechaPago,
+                                              interes = 0.03
+                                              });
+                db.SaveChanges();
+                CuentaDeAhorroBD.IngresarCapital(usuario, saldoPrestar);
+                GrupoDeAhorroBD.QuitarSaldo(grupo.id, saldoPrestar);
+
+                Console.WriteLine("Prestamo Agregado");
+
+
+
+            }
+            else
+            {
+                Console.WriteLine("tupla datos fue null");
+                return;
+            }
+
+
+
+
+
+        }
     }
 }

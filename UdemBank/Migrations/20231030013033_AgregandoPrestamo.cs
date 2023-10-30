@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UdemBank.Migrations
 {
     /// <inheritdoc />
-    public partial class newmigrationagain : Migration
+    public partial class AgregandoPrestamo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,8 @@ namespace UdemBank.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     id_CreadorGrupo = table.Column<int>(type: "INTEGER", nullable: false),
-                    SaldoGrupo = table.Column<double>(type: "REAL", nullable: false)
+                    SaldoGrupo = table.Column<double>(type: "REAL", nullable: false),
+                    NombreGrupo = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,7 +47,7 @@ namespace UdemBank.Migrations
                     id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    clave = table.Column<string>(type: "TEXT", nullable: false),
+                    clave = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +62,6 @@ namespace UdemBank.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     id_ParticipanteGrupo = table.Column<int>(type: "INTEGER", nullable: false),
                     id_GrupoAhorro = table.Column<int>(type: "INTEGER", nullable: false),
-                    ReleaseDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     PerteneceAlGrupo = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -77,6 +77,32 @@ namespace UdemBank.Migrations
                         name: "FK_UsuariosXGruposAhorros_Usuarios_id_ParticipanteGrupo",
                         column: x => x.id_ParticipanteGrupo,
                         principalTable: "Usuarios",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Prestamos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    id_usuarioXGrupoDeAhorro = table.Column<int>(type: "INTEGER", nullable: false),
+                    cantidadPrestamo = table.Column<double>(type: "REAL", nullable: false),
+                    deudaActual = table.Column<double>(type: "REAL", nullable: false),
+                    cantidadCuota = table.Column<double>(type: "REAL", nullable: false),
+                    cantidadAPagar = table.Column<double>(type: "REAL", nullable: false),
+                    fechaPrestamo = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    fechaPlazo = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    interes = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prestamos", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Prestamos_UsuariosXGruposAhorros_id_usuarioXGrupoDeAhorro",
+                        column: x => x.id_usuarioXGrupoDeAhorro,
+                        principalTable: "UsuariosXGruposAhorros",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -104,6 +130,11 @@ namespace UdemBank.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Prestamos_id_usuarioXGrupoDeAhorro",
+                table: "Prestamos",
+                column: "id_usuarioXGrupoDeAhorro");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TransaccionesGruposAhorros_idUsuarioXGrupo",
                 table: "TransaccionesGruposAhorros",
                 column: "idUsuarioXGrupo");
@@ -124,6 +155,9 @@ namespace UdemBank.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CuentasDeAhorros");
+
+            migrationBuilder.DropTable(
+                name: "Prestamos");
 
             migrationBuilder.DropTable(
                 name: "TransaccionesGruposAhorros");

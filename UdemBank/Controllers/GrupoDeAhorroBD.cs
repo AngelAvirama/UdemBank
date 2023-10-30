@@ -53,12 +53,26 @@ namespace UdemBank
 
         public static void IncrementarSaldo(int id,double saldo)
         {
+            Console.WriteLine("Entre a agregar saldo al grupo");
             using var db = new Contexto();
             var grupo = db.GruposDeAhorros.SingleOrDefault(u => u.id == id);
             //var grupo = ObtenerGrupoAhorroId(id);
             grupo.SaldoGrupo += saldo;
             db.SaveChanges();
             
+
+
+        }
+        public static void QuitarSaldo(int id, double saldo)
+        {
+            Console.WriteLine("Entre a quitar saldo del grupo");
+            using var db = new Contexto();
+            var grupo = db.GruposDeAhorros.SingleOrDefault(u => u.id == id);
+            //var grupo = ObtenerGrupoAhorroId(id);
+            grupo.SaldoGrupo -= saldo;
+            
+            db.SaveChanges();
+
 
 
         }
@@ -88,6 +102,14 @@ namespace UdemBank
                 }
             }
             MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);
+        }
+
+
+        public static double ObtenerSaldoGrupo(int id)
+        {
+            using var db = new Contexto();
+            var grupo = db.GruposDeAhorros.SingleOrDefault(u => u.id == id);
+            return grupo.SaldoGrupo;
         }
 
     }

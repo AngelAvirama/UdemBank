@@ -55,6 +55,43 @@ namespace UdemBank.Migrations
                     b.ToTable("GruposDeAhorros");
                 });
 
+            modelBuilder.Entity("UdemBank.Prestamo", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("cantidadAPagar")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("cantidadCuota")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("cantidadPrestamo")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("deudaActual")
+                        .HasColumnType("REAL");
+
+                    b.Property<DateOnly>("fechaPlazo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("fechaPrestamo")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("id_usuarioXGrupoDeAhorro")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("interes")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("id_usuarioXGrupoDeAhorro");
+
+                    b.ToTable("Prestamos");
+                });
+
             modelBuilder.Entity("UdemBank.TransaccionesGrupoAhorro", b =>
                 {
                     b.Property<int>("id")
@@ -122,6 +159,17 @@ namespace UdemBank.Migrations
                     b.HasIndex("id_ParticipanteGrupo");
 
                     b.ToTable("UsuariosXGruposAhorros");
+                });
+
+            modelBuilder.Entity("UdemBank.Prestamo", b =>
+                {
+                    b.HasOne("UdemBank.UsuarioXGrupoAhorro", "usuarioXGrupoDeAhorro")
+                        .WithMany()
+                        .HasForeignKey("id_usuarioXGrupoDeAhorro")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("usuarioXGrupoDeAhorro");
                 });
 
             modelBuilder.Entity("UdemBank.TransaccionesGrupoAhorro", b =>
