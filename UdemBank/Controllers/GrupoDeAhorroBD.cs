@@ -77,6 +77,21 @@ namespace UdemBank
 
         }
 
+        public static bool VerificarPropietario(Usuario usuario, GrupoDeAhorro grupoDeAhorro)
+        {
+            using var db = new Contexto();
+
+            if (grupoDeAhorro.id_CreadorGrupo == usuario.id)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("No puedes invitar porque no eres el propietario de este grupo");
+                return false;
+            }
+        }
+
         public static void IngresarUsuarioAGrupoDeAhorro(Usuario usuario, Usuario usuarioInvitado, GrupoDeAhorro grupoDeAhorro)
         {
             using var db = new Contexto();
@@ -121,6 +136,23 @@ namespace UdemBank
                 .Count();
 
             return cantidadGruposAhorro;
+        }
+
+        public static bool ObtenerCantidadUsuarios(GrupoDeAhorro grupoDeAhorro)
+        {
+            using var db = new Contexto();
+
+            int cantidadUsuarios = db.UsuariosXGruposAhorros
+                .Count(ug => ug.id_GrupoAhorro == grupoDeAhorro.id && ug.PerteneceAlGrupo);
+
+            if (cantidadUsuarios <= 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
