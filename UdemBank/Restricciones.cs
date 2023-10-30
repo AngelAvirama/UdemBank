@@ -11,11 +11,8 @@ namespace UdemBank
     {
         public static bool TieneMaximoGruposAhorro(int idUsuario)
         {
-            using var db = new Contexto();
 
-            int cantidadGruposAhorro = db.UsuariosXGruposAhorros
-                .Where(x => x.id_ParticipanteGrupo == idUsuario && x.PerteneceAlGrupo)
-                .Count();
+            int cantidadGruposAhorro = GrupoDeAhorroBD.ObtenerCantidadGruposDeAhorro(idUsuario);
 
             if (cantidadGruposAhorro >= 3)
             {

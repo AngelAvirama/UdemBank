@@ -112,6 +112,16 @@ namespace UdemBank
             return grupo.SaldoGrupo;
         }
 
+        public static int ObtenerCantidadGruposDeAhorro(int idUsuario)
+        {
+            using var db = new Contexto();
+
+            int cantidadGruposAhorro = db.UsuariosXGruposAhorros
+                .Where(x => x.id_ParticipanteGrupo == idUsuario && x.PerteneceAlGrupo)
+                .Count();
+
+            return cantidadGruposAhorro;
+        }
     }
 
 
