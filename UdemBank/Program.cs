@@ -8,7 +8,8 @@ namespace UdemBank
     {
         static void Main(string[] args)
         {
-            MenuManager.MainMenuManagement();
+            
+           MenuManager.MainMenuManagement();
         }
     }
 }

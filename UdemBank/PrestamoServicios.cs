@@ -11,18 +11,7 @@ namespace UdemBank
     {
         public static (double SaldoPrestamo, int idUxG, int CantidadMeses)? SolicitarCantidad(Usuario usuario, GrupoDeAhorro grupo)
         {
-            var saldoPrestar = -1.0;
-            do
-            {
-
-                saldoPrestar = AnsiConsole.Ask<double>("Ingresa la cantidad de saldo a Prestar: ");
-
-                if (saldoPrestar <= 0)
-                {
-                    Console.WriteLine("Error, ingresa una cantidad mayor a cero");
-                }
-            } while (saldoPrestar <= 0);
-
+            var saldoPrestar = SolicitarSaldo();
 
             int idUsuarioxGrupo = UsuarioXGrupoAhorroBD.ObtenerUsuarioXGrupoId(usuario.id, grupo.id);
 
@@ -41,6 +30,23 @@ namespace UdemBank
             else { return null; }
 
             
+        }
+
+        public static double SolicitarSaldo()
+        {
+            var saldoPrestar = -1.0;
+            do
+            {
+
+                saldoPrestar = AnsiConsole.Ask<double>("Ingresa la cantidad de saldo a Prestar: ");
+
+                if (saldoPrestar <= 0)
+                {
+                    Console.WriteLine("Error, ingresa una cantidad mayor a cero");
+                }
+            } while (saldoPrestar <= 0);
+
+            return saldoPrestar;
         }
 
         public static void MostrarDatosPrestamo(double saldo, int id, int meses)
@@ -93,6 +99,39 @@ namespace UdemBank
 
             
 
+
+
+        }
+
+
+
+        //A partir de aqui los de otros grupos
+        public static (double SaldoPrestamo, int idUxG, int CantidadMeses)? VerificarPrestamoOtrosGrupos(Usuario usuario, GrupoDeAhorro grupo)
+        {
+            double cantidadAPrestar = SolicitarSaldo();
+
+            var saldoGrupo = GrupoDeAhorroBD.ObtenerSaldoGrupo(grupo.id);
+            if (cantidadAPrestar > saldoGrupo)
+            {
+                Console.WriteLine("ERROR: La cantidad a prestar es mayor al saldo del grupo");
+                return null;
+            }
+            else
+            {
+                int numeroMeses = SolicitarCantidadMesesPrestamo();
+
+                int idUsuarioxGrupo = UsuarioXGrupoAhorroBD.CrearRelacionPrestamo(usuario.id, grupo.id);
+                
+                var tupla = (SaldoPrestamo: cantidadAPrestar, idUxG: idUsuarioxGrupo, CantidadMeses: numeroMeses);
+
+                MostrarDatosPrestamo(cantidadAPrestar, idUsuarioxGrupo, numeroMeses);
+                return tupla;
+
+                
+               
+
+
+            }
 
 
         }

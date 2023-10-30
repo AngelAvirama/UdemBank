@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 using Spectre.Console;
 
 namespace UdemBank
@@ -312,7 +313,21 @@ namespace UdemBank
 
                     break;
                 case MenuPrestamos.OtrosGrupos:
+                  GrupoDeAhorro otroGrupo = Login.BuscarOtrosGrupos(usuario.id);
+                    if(otroGrupo != null)
+                    {
+                        Console.WriteLine("Niceeee");
+                        PrestamoBD.PrestamoOtrosGrupos(usuario,otroGrupo);
+
+                    }
+                    else
+                    {
+                        GestionarMenuUsuario(usuario);
+                    }
                     
+                    
+
+
                     break;
                 case MenuPrestamos.Salir:
                     GestionarMenuUsuario(usuario);
