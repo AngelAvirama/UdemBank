@@ -25,14 +25,19 @@ namespace UdemBank
             Salir
         }
 
-        
+        enum MenuPagos
+        {
+            PagarMisGrupos,
+            PagarOtrosGrupos,
+            Salir
+        }
         enum MenuUsuario
         {
             MiCuenta,
             Pagar,
             HistorialMovimientos,
             Prestamos,
-            GestionarMisGruposDeAhorro, 
+            GestionarMisGruposDeAhorro,
             SalirDeCuenta
         }
 
@@ -133,7 +138,7 @@ namespace UdemBank
             {
                 case MenuRegistrarse.CrearCuenta:
                     UsuarioBD.CrearCuenta();
-                    
+
                     break;
                 case MenuRegistrarse.Salir:
                     MainMenuManagement();
@@ -143,7 +148,7 @@ namespace UdemBank
 
 
 
-        
+
 
         public static void GestionarMenuUsuario(Usuario usuario)
         {
@@ -164,6 +169,7 @@ namespace UdemBank
                     UsuarioBD.MostrarInformacionCuenta(usuario);
                     break;
                 case MenuUsuario.Pagar:
+                    GestionarMenuPagos(usuario);
                     break;
                 case MenuUsuario.HistorialMovimientos:
                     break;
@@ -202,14 +208,14 @@ namespace UdemBank
 
         public static void GestionarMenuMisGruposDeAhorro(Usuario usuario)
         {
-              var option = AnsiConsole.Prompt(  
-                new SelectionPrompt<MenuGestionarGruposDeAhorro>()
-                .Title("Qué quieres hacer?")
-                .AddChoices(
-                    MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro,
-                    MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro,
-                    MenuGestionarGruposDeAhorro.Salir
-                    ));
+            var option = AnsiConsole.Prompt(
+              new SelectionPrompt<MenuGestionarGruposDeAhorro>()
+              .Title("Qué quieres hacer?")
+              .AddChoices(
+                  MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro,
+                  MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro,
+                  MenuGestionarGruposDeAhorro.Salir
+                  ));
             switch (option)
             {
                 case MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro:
@@ -226,7 +232,7 @@ namespace UdemBank
                         Console.WriteLine($"{usuario.nombre} no tiene grupos de ahorro");
                         GestionarMenuMisGruposDeAhorro(usuario);
                     }
-                    
+
 
                     break;
                 case MenuGestionarGruposDeAhorro.Salir:
@@ -234,7 +240,7 @@ namespace UdemBank
                     break;
             }
         }
-       
+
         public static void GestionarMenuGrupoDeAhorro(Usuario usuario, GrupoDeAhorro grupo)
         {
             var option = AnsiConsole.Prompt(
@@ -264,7 +270,7 @@ namespace UdemBank
                             Console.WriteLine("Ya no puedes invitar a más personas en este grupo de ahorro");
                             GestionarMenuGrupoDeAhorro(usuario, grupo);
                         }
-                        
+
                     }
                     else
                     {
@@ -313,23 +319,46 @@ namespace UdemBank
 
                     break;
                 case MenuPrestamos.OtrosGrupos:
-                  GrupoDeAhorro otroGrupo = Login.BuscarOtrosGrupos(usuario.id);
-                    if(otroGrupo != null)
+                    GrupoDeAhorro otroGrupo = Login.BuscarOtrosGrupos(usuario.id);
+                    if (otroGrupo != null)
                     {
                         Console.WriteLine("Niceeee");
-                        PrestamoBD.PrestamoOtrosGrupos(usuario,otroGrupo);
+                        PrestamoBD.PrestamoOtrosGrupos(usuario, otroGrupo);
 
                     }
                     else
                     {
                         GestionarMenuUsuario(usuario);
                     }
-                    
-                    
+
+
 
 
                     break;
                 case MenuPrestamos.Salir:
+                    GestionarMenuUsuario(usuario);
+                    break;
+            }
+        }
+
+
+        public static void GestionarMenuPagos(Usuario usuario)
+        {
+            var option = AnsiConsole.Prompt(
+            new SelectionPrompt<MenuPagos>()
+            .Title("Te encuentras en el menu de Pagos, ¿A que tipo de grupo deseas pagarle? ")
+            .AddChoices(
+                MenuPagos.PagarMisGrupos,
+                MenuPagos.PagarOtrosGrupos,
+                MenuPagos.Salir));
+
+            switch (option)
+            {
+                case MenuPagos.PagarMisGrupos:
+                    break;
+                case MenuPagos.PagarOtrosGrupos:
+                    break;
+                case MenuPagos.Salir:
                     GestionarMenuUsuario(usuario);
                     break;
             }
