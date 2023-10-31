@@ -9,7 +9,6 @@ namespace UdemBank
 {
     public class PrestamoBD
     {
-
         public static void PrestamoGrupoParticipante(Usuario usuario, GrupoDeAhorro grupo)
         {
             //Conexión a la BD --> contexto
@@ -17,7 +16,6 @@ namespace UdemBank
 
             if (tuplaDatos != null)
             {
-
                 //Todos estos calculos hay que meterlos en otra funcion 
                 Console.WriteLine("Tupla datos no fue null");
                 double saldoPrestar = tuplaDatos.Value.SaldoPrestamo;
@@ -25,14 +23,11 @@ namespace UdemBank
                 int meses = tuplaDatos.Value.cantidadMeses;
                 Console.WriteLine($"Datos retornados por tupla:saldoprestar:{saldoPrestar}\nidUxG:{idUsuarioGrupo}\nmeses:{meses}");
 
-
                 DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
                 DateOnly fechaPago = DateOnly.FromDateTime(DateTime.Now).AddMonths(meses);
 
-
                 double cantidadPagar = saldoPrestar + (saldoPrestar * 0.03);
                 double cuota = cantidadPagar / meses;
-
 
                 using var db = new Contexto(); 
                 
@@ -51,20 +46,12 @@ namespace UdemBank
 
                 Console.WriteLine("Prestamo Agregado");
                 MenuManager.GestionarMenuUsuario(usuario);
-
-
-
             }
             else
             {
                 Console.WriteLine("tupla datos fue null");
                 return;
             }
-
-
-
-
-
         }
 
         public static void PrestamoOtrosGrupos(Usuario usuario, GrupoDeAhorro grupo)
@@ -82,14 +69,11 @@ namespace UdemBank
                 int meses = tuplaDatos.Value.cantidadMeses;
                 Console.WriteLine($"Datos retornados por tupla:saldoprestar:{saldoPrestar}\nidUxG:{idUsuarioGrupo}\nmeses:{meses}");
 
-
                 DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
                 DateOnly fechaPago = DateOnly.FromDateTime(DateTime.Now).AddMonths(meses);
 
-
                 double cantidadPagar = saldoPrestar + (saldoPrestar * 0.05);
                 double cuota = cantidadPagar / meses;
-
 
                 using var db = new Contexto();
 
@@ -110,7 +94,6 @@ namespace UdemBank
 
                 Console.WriteLine("Prestamo Agregado");
                 MenuManager.GestionarMenuUsuario(usuario);
-
             }
             else
             {

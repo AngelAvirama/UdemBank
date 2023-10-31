@@ -17,37 +17,32 @@ namespace UdemBank
             db.SaveChanges();
         }
 
-
         public static int CrearRelacionPrestamo(int idUsuario, int idGrupo)
         {
             using var db = new Contexto();
 
             //Esto es para que no se cree el registro de nuevo en la tabla usuarioXgrupoAhorro en caso de que ya exista
-            List<UsuarioXGrupoAhorro> listUsuarioxGrupo = db.UsuariosXGruposAhorros.Where(x => x.id_ParticipanteGrupo == idUsuario && x.id_GrupoAhorro == idGrupo && x.PerteneceAlGrupo ==false ).ToList();
+            List<UsuarioXGrupoAhorro> listUsuarioxGrupo = db.UsuariosXGruposAhorros.Where(x => x.id_ParticipanteGrupo == idUsuario && x.id_GrupoAhorro == idGrupo && x.PerteneceAlGrupo == false).ToList();
 
-            if(listUsuarioxGrupo.Count == 0)
+            if (listUsuarioxGrupo.Count == 0)
             {
                 UsuarioXGrupoAhorro newUsuarioXGrupo = new UsuarioXGrupoAhorro { id_ParticipanteGrupo = idUsuario, id_GrupoAhorro = idGrupo, PerteneceAlGrupo = false };
                 db.UsuariosXGruposAhorros.Add(newUsuarioXGrupo);
                 db.SaveChanges();
                 return newUsuarioXGrupo.id;
             }
-
             else
             {
-                return ObtenerUsuarioXGrupoId(idUsuario,idGrupo);
+                return ObtenerUsuarioXGrupoId(idUsuario, idGrupo);
             }
-
-            
         }
         //Esta obtiene los registros de las relaciones UsuarioXGrupoAhorros, no los grupos como tal
+
         public static List<UsuarioXGrupoAhorro> ObtenerListaMisGrupos(int idUsuario)
         {
             using var db = new Contexto();
 
             List<UsuarioXGrupoAhorro> misGrupos = db.UsuariosXGruposAhorros.Where(x => x.id_ParticipanteGrupo == idUsuario && x.PerteneceAlGrupo == true).ToList();
-
-
             return misGrupos;
         }
 
@@ -70,9 +65,7 @@ namespace UdemBank
 
             if (cuentaDeAhorro.saldo >= saldoIngresado)
             {
-                //grupoDeAhorro.SaldoGrupo += saldoIngresado;
                 GrupoDeAhorroBD.IncrementarSaldo(grupoDeAhorro.id, saldoIngresado);
-
                 cuentaDeAhorro.saldo -= saldoIngresado;
 
                 db.SaveChanges();
@@ -98,23 +91,18 @@ namespace UdemBank
 
             db.SaveChanges();
 
+            Comision.ObtenerComisionDeGrupoDisuelto(grupoDeAhorro);
             Console.WriteLine("El grupo se ha eliminado exitosamente");
             MenuManager.GestionarMenuMisGruposDeAhorro(usuario);
         }
-
 
         public static List<int> ObtenerUsuariosGrupo(int idGrupo, int idParticipante) //Excepto el que quiere prestar
         {
             using var db = new Contexto();
 
             var usuariosxGruposAhorros = db.UsuariosXGruposAhorros.Where(x => x.id_ParticipanteGrupo != idParticipante && x.id_GrupoAhorro == idGrupo && x.PerteneceAlGrupo==true).ToList();
-
             var idUsuarios = usuariosxGruposAhorros.Select(x => x.id_ParticipanteGrupo).ToList();
-
-
-            return idUsuarios;
-            
+            return idUsuarios; 
         }
-
     }
 }

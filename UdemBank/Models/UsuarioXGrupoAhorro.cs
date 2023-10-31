@@ -11,15 +11,11 @@ namespace UdemBank
 {
     public class UsuarioXGrupoAhorro
     {
-
         [Key]
         public int id { get; set; }
-
-
         public int id_ParticipanteGrupo { get; set; }
         [ForeignKey(nameof(id_ParticipanteGrupo))]
         public Usuario Usuario { get; set; }
-
         public int id_GrupoAhorro { get; set; }
         [ForeignKey(nameof(id_GrupoAhorro))]
         public GrupoDeAhorro GrupoDeAhorro { get; set; }

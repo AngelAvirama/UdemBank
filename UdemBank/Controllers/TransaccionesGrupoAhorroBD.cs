@@ -9,46 +9,6 @@ namespace UdemBank
 {
     public class TransaccionesGrupoAhorroBD
     {
-
-      /*  public static void PrestamoGrupoParticipante(Usuario usuario,GrupoDeAhorro grupo)
-        {
-             //Conexión a la BD --> contexto
-            (double SaldoPrestamo, int idUxG, int cantidadMeses)? tuplaDatos = PrestamoServicios.SolicitarCantidad(usuario,grupo); //Una tupla que me retorne el valor y el id usuarioxgrupo, cantidadMeses
-
-            if (tuplaDatos != null)
-            {
-                Console.WriteLine("Tupla datos no fue null");
-                double saldoPrestar = tuplaDatos.Value.SaldoPrestamo;
-                int idUsuarioGrupo = tuplaDatos.Value.idUxG;
-                int meses = tuplaDatos.Value.cantidadMeses;
-                Console.WriteLine($"Datos retornados por tupla:saldoprestar:{saldoPrestar}\nidUxG:{idUsuarioGrupo}\nmeses:{meses}");
-
-                DateOnly nuevaFecha = DateOnly.FromDateTime(DateTime.Now).AddMonths(meses);
-
-                using var db = new Contexto();
-                db.TransaccionesGruposAhorros.Add(new TransaccionesGrupoAhorro{ idUsuarioXGrupo = idUsuarioGrupo, CantidadTransaccion = saldoPrestar, fecha = nuevaFecha, TipoTransaccion = "Prestamo"});
-                db.SaveChanges();
-                CuentaDeAhorroBD.IngresarCapital(usuario,saldoPrestar);
-                GrupoDeAhorroBD.QuitarSaldo(grupo.id,saldoPrestar);
-
-                Console.WriteLine("Prestamo Agregado");
-
-
-
-            }
-            else
-            {
-                Console.WriteLine("tupla datos fue null");
-                return;
-            }
-            
-            
-
-
-
-        }*/
-
-
         public static double ObtenerAporteUsuario(int idUsuarioGrupo)
         {
             using var db = new Contexto();
@@ -69,5 +29,4 @@ namespace UdemBank
             db.SaveChanges();
         }
     }
-
 }

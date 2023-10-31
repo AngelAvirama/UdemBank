@@ -13,6 +13,5 @@ namespace UdemBank
         public int id_CreadorGrupo { get; set; }
         public double SaldoGrupo { get; set; }
         public string NombreGrupo { get; set; }
-    
     }
 }

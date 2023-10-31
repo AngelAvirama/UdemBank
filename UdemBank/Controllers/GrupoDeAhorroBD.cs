@@ -28,7 +28,7 @@ namespace UdemBank
 
                 UsuarioXGrupoAhorroBD.UnirseAGrupoDeAhorro(usuario.id, grupoAhorro.id);
             }
-            
+
             MenuManager.GestionarMenuMisGruposDeAhorro(usuario);
         }
 
@@ -36,8 +36,8 @@ namespace UdemBank
         {
             using var db = new Contexto();
             List<GrupoDeAhorro> Grupos = new List<GrupoDeAhorro>();
-            foreach (int id in listId) {
-                
+            foreach (int id in listId)
+            {
                 GrupoDeAhorro grupo = db.GruposDeAhorros.Single(g => g.id == id);
                 Grupos.Add(grupo);
             }
@@ -59,9 +59,6 @@ namespace UdemBank
             //var grupo = ObtenerGrupoAhorroId(id);
             grupo.SaldoGrupo += saldo;
             db.SaveChanges();
-            
-
-
         }
         public static void QuitarSaldo(int id, double saldo)
         {
@@ -72,9 +69,6 @@ namespace UdemBank
             grupo.SaldoGrupo -= saldo;
             
             db.SaveChanges();
-
-
-
         }
 
         public static bool VerificarPropietario(Usuario usuario, GrupoDeAhorro grupoDeAhorro)
@@ -119,7 +113,6 @@ namespace UdemBank
             MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);
         }
 
-
         public static double ObtenerSaldoGrupo(int id)
         {
             using var db = new Contexto();
@@ -155,7 +148,4 @@ namespace UdemBank
             }
         }
     }
-
-
-
 }

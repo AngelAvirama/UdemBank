@@ -13,8 +13,6 @@ namespace UdemBank
     {
         [Key]
         public int id { get; set; }
-
-
         public int idUsuarioXGrupo { get; set; }
         [ForeignKey(nameof(idUsuarioXGrupo))]
 

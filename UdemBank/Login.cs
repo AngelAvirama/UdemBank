@@ -46,13 +46,11 @@ namespace UdemBank
 
         public static Usuario Acceder()
         {
-
             String claveIngresada;
             Usuario usuario;
             do
             {
                 usuario = ObtenerListaUsuarios();
-                
                 claveIngresada = AnsiConsole.Ask<string>("Ingresa tu clave: ");
 
                 if (claveIngresada == usuario.clave)
@@ -65,13 +63,11 @@ namespace UdemBank
                 }
             } while (claveIngresada != usuario.clave);
 
-            return usuario;
-            
+            return usuario;  
         }
 
         public static GrupoDeAhorro SeleccionarMiGrupoAhorro(int idUsuario)
         {
-
             var misUsuarioXGrupoAhorros = UsuarioXGrupoAhorroBD.ObtenerListaMisGrupos(idUsuario);
             if (misUsuarioXGrupoAhorros.Count != 0)
             {
@@ -81,11 +77,9 @@ namespace UdemBank
 
                 var nombresGrupoAhorro = gruposAhorro.Select(x => x.NombreGrupo).ToList();
 
-
                 var opcion = AnsiConsole.Prompt(new SelectionPrompt<string>()
                     .Title("Selecciona un grupo de ahorro: ")
                     .AddChoices(nombresGrupoAhorro));
-
 
                 var idGrupo = gruposAhorro.Single(x => x.NombreGrupo == opcion).id;
                 return GrupoDeAhorroBD.ObtenerGrupoAhorroId(idGrupo);
@@ -103,7 +97,6 @@ namespace UdemBank
             {
                 var listaMisUsuarioXGrupoAhorros = misUsuarioXGrupoAhorros.Select(x => x.id_GrupoAhorro).ToList(); //Lista con los id de los grupos
                 List<int> idUsuarios = new List<int>();
-
 
                 //Dos ciclos. El grande obtiene los id de los participantes de un grupo. Y el de adentro mete cada id
                 //y verifica que no este antes de hacerlo
@@ -133,10 +126,9 @@ namespace UdemBank
                     foreach(int idDeGrupo in auxiliarIdGrupos)
                     {
                         if (!idGrupos.Contains(idDeGrupo))
-                            {
+                        {
                             idGrupos.Add(idDeGrupo);
-                            }
-                        
+                        }   
                     }
                 }
 
@@ -149,7 +141,6 @@ namespace UdemBank
                     }
                 }
                 //Aqui ya acabo y tiene los id de los otros grupos en los que puede prestar*/
-
                 
                 var idGruposFiltrados = idGrupos.Except(listaMisUsuarioXGrupoAhorros).ToList(); //Quita los elementos que ya estan en la otra lista
                
@@ -169,22 +160,18 @@ namespace UdemBank
             }
         }
 
-
         public static GrupoDeAhorro SeleccionarOtrosGrupos(List<int> idDeGrupos)
         {
             //Esto esta repetido, luego hay que quitarlo
             var gruposAhorro = GrupoDeAhorroBD.ObtenerGruposAhorro(idDeGrupos);
             var nombresGrupoAhorro = gruposAhorro.Select(x => x.NombreGrupo).ToList();
 
-
             var opcion = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Selecciona un grupo de ahorro: ")
                 .AddChoices(nombresGrupoAhorro));
 
-
             var idGrupo = gruposAhorro.Single(x => x.NombreGrupo == opcion).id;
             return GrupoDeAhorroBD.ObtenerGrupoAhorroId(idGrupo);
         }
-
-        }
     }
+}

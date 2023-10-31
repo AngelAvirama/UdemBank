@@ -13,7 +13,6 @@ namespace UdemBank
         public static void CrearCuenta()
         {
             //Se supone que el Id lo crear el entity framework
-
             var Nombre = AnsiConsole.Ask<string>("Ingresa tu nombre: ");
             var Clave = AnsiConsole.Ask<string>("Ingresa una clave:");
 

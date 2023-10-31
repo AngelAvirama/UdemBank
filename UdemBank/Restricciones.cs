@@ -11,9 +11,7 @@ namespace UdemBank
     {
         public static bool TieneMaximoGruposAhorro(int idUsuario)
         {
-
             int cantidadGruposAhorro = GrupoDeAhorroBD.ObtenerCantidadGruposDeAhorro(idUsuario);
-
             if (cantidadGruposAhorro >= 3)
             {
                 return true;

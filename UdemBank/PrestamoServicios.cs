@@ -25,11 +25,8 @@ namespace UdemBank
 
                 MostrarDatosPrestamo(saldoPrestar,idUsuarioxGrupo,cantidadMeses);
                 return tupla;
-
             }
             else { return null; }
-
-            
         }
 
         public static double SolicitarSaldo()
@@ -37,7 +34,6 @@ namespace UdemBank
             var saldoPrestar = -1.0;
             do
             {
-
                 saldoPrestar = AnsiConsole.Ask<double>("Ingresa la cantidad de saldo a Prestar: ");
 
                 if (saldoPrestar <= 0)
@@ -51,12 +47,10 @@ namespace UdemBank
 
         public static void MostrarDatosPrestamo(double saldo, int id, int meses)
         {
-            
             DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
             DateOnly fechaDePago = fechaActual.AddMonths(meses);
             Console.WriteLine($"Datos del prestamo:\nFecha actual: {fechaActual}\nSaldo a Prestar: {saldo}\nFecha de pago{fechaDePago}\nPresiona Enter para continuar ");
             Console.ReadKey();
-            //Console.Clear();
         }
 
         public static int SolicitarCantidadMesesPrestamo()
@@ -83,9 +77,6 @@ namespace UdemBank
                 return false;
             }
 
-
-
-            //var SaldoAportado
             var saldoAportado = TransaccionesGrupoAhorroBD.ObtenerAporteUsuario(idUsuarioGrupo);
 
             if(saldoAPrestar > saldoAportado)
@@ -95,22 +86,14 @@ namespace UdemBank
             }
 
             return true;
-
-
-            
-
-
-
         }
-
-
 
         //A partir de aqui los de otros grupos
         public static (double SaldoPrestamo, int idUxG, int CantidadMeses)? VerificarPrestamoOtrosGrupos(Usuario usuario, GrupoDeAhorro grupo)
         {
             double cantidadAPrestar = SolicitarSaldo();
-
             var saldoGrupo = GrupoDeAhorroBD.ObtenerSaldoGrupo(grupo.id);
+
             if (cantidadAPrestar > saldoGrupo)
             {
                 Console.WriteLine("ERROR: La cantidad a prestar es mayor al saldo del grupo");
@@ -126,15 +109,7 @@ namespace UdemBank
 
                 MostrarDatosPrestamo(cantidadAPrestar, idUsuarioxGrupo, numeroMeses);
                 return tupla;
-
-                
-               
-
-
             }
-
-
         }
     }
-
 }

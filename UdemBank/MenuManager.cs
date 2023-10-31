@@ -10,14 +10,12 @@ namespace UdemBank
 {
     public class MenuManager
     {
-        //Gravee
         enum MainMenuOptions
         {
             IniciarSesion,
             Registrarse,
             Salir
         }
-        //viendo cambios
 
         enum MenuRegistrarse
         {
@@ -31,6 +29,7 @@ namespace UdemBank
             PagarOtrosGrupos,
             Salir
         }
+
         enum MenuUsuario
         {
             MiCuenta,
@@ -69,19 +68,8 @@ namespace UdemBank
             Salir
         }
 
-        enum MenuMisGruposDeAhorro
-        {
-            //Lista de sus grupos de ahorro
-        }
-
-        enum MenuOtrosGrupos
-        {
-            //Lista de otros grupos de ahorro
-        }
-
         public static void MainMenuManagement()
         {
-            //Menú principal
             Console.Clear();
             var option = AnsiConsole.Prompt(
                 new SelectionPrompt<MainMenuOptions>()
@@ -102,28 +90,10 @@ namespace UdemBank
                     GestionarMenuRegistrarse();
                     break;
                 case MainMenuOptions.Salir:
-
                     Console.WriteLine("¡Gracias por usar UdemBank!");
                     break;
             }
         }
-
-        /*public static void GestionarMenuIniciarSesion()
-        {
-            var option = AnsiConsole.Prompt(
-            new SelectionPrompt<MenuIniciarSesion>()
-            .Title("Selecciona tu usuario")
-            .AddChoices(
-                Login.ObtenerListaUsuarios(),
-                MenuIniciarSesion.Salir));
-
-            switch (option)
-            {
-                case MenuIniciarSesion.Salir:
-                    SalirMenuInicial();
-                    break;
-            }
-        }*/
 
         public static void GestionarMenuRegistrarse()
         {
@@ -138,17 +108,12 @@ namespace UdemBank
             {
                 case MenuRegistrarse.CrearCuenta:
                     UsuarioBD.CrearCuenta();
-
                     break;
                 case MenuRegistrarse.Salir:
                     MainMenuManagement();
                     break;
             }
         }
-
-
-
-
 
         public static void GestionarMenuUsuario(Usuario usuario)
         {
@@ -163,6 +128,7 @@ namespace UdemBank
                     MenuUsuario.GestionarMisGruposDeAhorro,
                     MenuUsuario.SalirDeCuenta
                     ));
+
             switch (option)
             {
                 case MenuUsuario.MiCuenta:
@@ -216,6 +182,7 @@ namespace UdemBank
                   MenuGestionarGruposDeAhorro.SeleccionarUnGrupoDeAhorro,
                   MenuGestionarGruposDeAhorro.Salir
                   ));
+
             switch (option)
             {
                 case MenuGestionarGruposDeAhorro.CrearGrupoDeAhorro:
@@ -232,8 +199,6 @@ namespace UdemBank
                         Console.WriteLine($"{usuario.nombre} no tiene grupos de ahorro");
                         GestionarMenuMisGruposDeAhorro(usuario);
                     }
-
-
                     break;
                 case MenuGestionarGruposDeAhorro.Salir:
                     GestionarMenuUsuario(usuario);
@@ -315,8 +280,6 @@ namespace UdemBank
                         Console.WriteLine($"{usuario.nombre} no tiene grupos de ahorro");
                         GestionarMenuUsuario(usuario);
                     }
-
-
                     break;
                 case MenuPrestamos.OtrosGrupos:
                     GrupoDeAhorro otroGrupo = Login.BuscarOtrosGrupos(usuario.id);
@@ -324,23 +287,17 @@ namespace UdemBank
                     {
                         Console.WriteLine("Niceeee");
                         PrestamoBD.PrestamoOtrosGrupos(usuario, otroGrupo);
-
                     }
                     else
                     {
                         GestionarMenuUsuario(usuario);
                     }
-
-
-
-
                     break;
                 case MenuPrestamos.Salir:
                     GestionarMenuUsuario(usuario);
                     break;
             }
         }
-
 
         public static void GestionarMenuPagos(Usuario usuario)
         {

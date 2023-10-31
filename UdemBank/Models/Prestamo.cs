@@ -37,6 +37,5 @@ namespace UdemBank
 
         [Required]
         public double interes {  get; set; }
-        
     }
 }
