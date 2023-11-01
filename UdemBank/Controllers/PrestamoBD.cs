@@ -101,5 +101,16 @@ namespace UdemBank
                 return;
             }
         }
+
+        public static List<Prestamo> ObtenerHistorialPrestamo(int idUsuario)
+        {
+            using var db = new Contexto();
+
+            var prestamos = db.Prestamos
+                .Where(p => p.usuarioXGrupoDeAhorro.Usuario.id == idUsuario)
+                .ToList();
+
+            return prestamos;
+        }
     }
 }

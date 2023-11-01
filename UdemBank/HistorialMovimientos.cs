@@ -9,53 +9,53 @@ namespace UdemBank
 {
     public class HistorialMovimientos
     {
-        public static void ObtenerHistorialMovimientos(Usuario usuario)
+        public static void historialMovimientos(Usuario usuario)
         {
-            using var db = new Contexto();
-            
-            // Obtener transacciones personales
-            var transaccionesPersonales = db.TransaccionesCuentaAhorros
-                .Where(t => t.CuentaDeAhorro.id_propietario == usuario.id)
-                .ToList();
+            var transaccionesPersonales = CuentaDeAhorroBD.ObtenerHistorialCuentaDeAhorro(usuario.id);
 
-            Console.WriteLine("Historial de Transacciones Personales:");
-            foreach (var transaccion in transaccionesPersonales)
+            if (transaccionesPersonales.Count > 0)
             {
-                Console.WriteLine($"Fecha: {transaccion.fecha}, Tipo: {transaccion.TipoTransaccion}, Cantidad: {transaccion.CantidadTransaccion}");
-            }
-
-            // Obtener transacciones de grupos de ahorro
-            var relacionesUsuarioGrupo = db.UsuariosXGruposAhorros
-                .Where(ug => ug.id_ParticipanteGrupo == usuario.id && ug.PerteneceAlGrupo)
-                .ToList();
-
-            foreach (var relacion in relacionesUsuarioGrupo)
-            {
-                var transaccionesGrupo = db.TransaccionesGruposAhorros
-                    .Where(t => t.idUsuarioXGrupo == relacion.id)
-                    .ToList();
-
-                if (transaccionesGrupo.Count > 0)
+                Console.WriteLine();
+                Console.WriteLine("Historial de transacciones personales:");
+                foreach (var transaccion in transaccionesPersonales)
                 {
-                    Console.WriteLine($"Historial de Transacciones en el Grupo: {relacion.GrupoDeAhorro.NombreGrupo}");
-                    foreach (var transaccion in transaccionesGrupo)
-                    {
-                        Console.WriteLine($"Fecha: {transaccion.fecha}, Tipo: {transaccion.TipoTransaccion}, Cantidad: {transaccion.CantidadTransaccion}");
-                    }
+                    Console.WriteLine($"Fecha: {transaccion.fecha}, Tipo: {transaccion.TipoTransaccion}, Cantidad: {transaccion.CantidadTransaccion}");
                 }
             }
 
-            // Obtener préstamos
-            var prestamos = db.Prestamos
-                .Where(p => p.usuarioXGrupoDeAhorro.Usuario.id == usuario.id)
-                .ToList();
+            // Obtener transacciones de grupos de ahorro
+            var transaccionesGrupo = UsuarioXGrupoAhorroBD.ObtenerHistorialGrupoDeAhorro(usuario.id);
 
-            Console.WriteLine("Historial de Préstamos:");
-            foreach (var prestamo in prestamos)
+            if (transaccionesGrupo.Count > 0)
             {
-                Console.WriteLine($"Fecha del Préstamo: {prestamo.fechaPrestamo}, Cantidad Prestada: {prestamo.cantidadPrestamo}, Deuda Actual: {prestamo.deudaActual}");
+                Console.WriteLine();
+                Console.WriteLine("Historial de transacciones de grupos de ahorro:");
+                foreach (var transaccion in transaccionesGrupo)
+                {
+                    Console.WriteLine($"Fecha: {transaccion.fecha}, Tipo: {transaccion.TipoTransaccion}, Cantidad: {transaccion.CantidadTransaccion}");
+                }
             }
-        }
 
+            // Obtener transacciones de los prestamos
+            var prestamos = PrestamoBD.ObtenerHistorialPrestamo(usuario.id);
+
+            if (prestamos.Count > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Historial de Préstamos:");
+                foreach (var prestamo in prestamos)
+                {
+                    Console.WriteLine($"Fecha del Préstamo: {prestamo.fechaPrestamo}, Cantidad Prestada: {prestamo.cantidadPrestamo}, Deuda Actual: {prestamo.deudaActual}");
+                    Console.WriteLine();
+                }
+            }
+            if (transaccionesPersonales.Count <= 0 && transaccionesGrupo.Count <= 0 && prestamos.Count <= 0)
+            {
+                Console.WriteLine("No tienes historial de movimientos");
+                Console.WriteLine();
+            }
+
+            MenuManager.GestionarMenuUsuario(usuario);
+        }
     }
 }

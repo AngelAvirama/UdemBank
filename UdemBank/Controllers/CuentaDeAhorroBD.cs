@@ -47,5 +47,17 @@ namespace UdemBank
                 MenuManager.GestionarMenuUsuario(usuario);
             }
         }
+
+        public static List<Transacciones> ObtenerHistorialCuentaDeAhorro(int idUsuario)
+        {
+            using var db = new Contexto();
+
+            // Obtener transacciones personales
+            var transaccionesPersonales = db.TransaccionesCuentaAhorros
+                .Where(t => t.CuentaDeAhorro.id_propietario == idUsuario)
+                .ToList();
+
+            return transaccionesPersonales;
+        }
     }
 }

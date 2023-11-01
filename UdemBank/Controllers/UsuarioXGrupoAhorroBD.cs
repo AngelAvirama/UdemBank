@@ -104,5 +104,25 @@ namespace UdemBank
             var idUsuarios = usuariosxGruposAhorros.Select(x => x.id_ParticipanteGrupo).ToList();
             return idUsuarios; 
         }
+
+        public static List<TransaccionesGrupoAhorro> ObtenerHistorialGrupoDeAhorro(int idUsuario)
+        {
+            using var db = new Contexto();
+
+            var relacionesUsuarioGrupo = db.UsuariosXGruposAhorros
+                .Where(ug => ug.id_ParticipanteGrupo == idUsuario && ug.PerteneceAlGrupo)
+                .ToList();
+
+            var transaccionesGrupo = new List<TransaccionesGrupoAhorro>();
+
+            foreach (var relacion in relacionesUsuarioGrupo)
+            {
+                var transaccion = db.TransaccionesGruposAhorros
+                    .Where(t => t.idUsuarioXGrupo == relacion.id)
+                    .ToList();
+                transaccionesGrupo.AddRange(transaccion);
+            }
+            return transaccionesGrupo;
+        }
     }
 }
