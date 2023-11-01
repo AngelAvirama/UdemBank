@@ -71,7 +71,7 @@ namespace UdemBank
                 db.SaveChanges();
 
                 int idUsuarioGrupo = ObtenerUsuarioXGrupoId(usuario.id, grupoDeAhorro.id);
-                TransaccionesGrupoAhorroBD.RegistrarTransaccionGrupo(idUsuarioGrupo, saldoIngresado, "Transaccion");
+                TransaccionesGrupoAhorroBD.RegistrarTransaccionGrupo(idUsuarioGrupo, saldoIngresado, "Transaccion Grupo de Ahorro");
 
                 Console.WriteLine("Saldo ingresado exitosamente");
                 MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);

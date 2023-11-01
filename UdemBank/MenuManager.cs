@@ -138,6 +138,7 @@ namespace UdemBank
                     GestionarMenuPagos(usuario);
                     break;
                 case MenuUsuario.HistorialMovimientos:
+                    HistorialMovimientos.ObtenerHistorialMovimientos(usuario);
                     break;
                 case MenuUsuario.Prestamos:
                     GestionarMenuPrestamos(usuario);
@@ -319,6 +320,11 @@ namespace UdemBank
                     GestionarMenuUsuario(usuario);
                     break;
             }
+        }
+
+        public static void GestionarMenuHistorialMovimientos()
+        {
+
         }
     }
 }
