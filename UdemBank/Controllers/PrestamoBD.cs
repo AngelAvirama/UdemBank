@@ -41,7 +41,7 @@ namespace UdemBank
                                               interes = 0.03
                                               });
                 db.SaveChanges();
-                CuentaDeAhorroBD.IngresarCapital(usuario, saldoPrestar);
+                CuentaDeAhorroBD.IngresarCapital(usuario, saldoPrestar,true);
                 GrupoDeAhorroBD.QuitarSaldo(grupo.id, saldoPrestar);
 
                 Console.WriteLine("Prestamo Agregado");

@@ -19,7 +19,7 @@ namespace UdemBank
             db.SaveChanges();
         }
 
-        public static void IngresarCapital(Usuario usuario, double saldoIngresado = -1,bool prestamo =true)
+        public static void IngresarCapital(Usuario usuario, double saldoIngresado = -1,bool prestamo =false)
         {
             using var db = new Contexto();
 
