@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 using Spectre.Console;
 
 namespace UdemBank
@@ -27,6 +28,24 @@ namespace UdemBank
             DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
             db.TransaccionesGruposAhorros.Add(new TransaccionesGrupoAhorro { idUsuarioXGrupo = idUsuarioGrupo, CantidadTransaccion = cantidadTransaccion, fecha =fechaActual, TipoTransaccion = Tipo});
             db.SaveChanges();
+        }
+
+
+        public static void RegistrarPagoPrestamo(Usuario usuario)
+        {
+            var infoTransaccion = PagoServicios.RealizarPagoPrestamo(usuario);
+
+            if(infoTransaccion.Item1 == 0 && infoTransaccion.Item2 == 0)
+            {
+                Console.WriteLine("No tienes prestamos vigentes");
+            }
+            else
+            {
+                RegistrarTransaccionGrupo(infoTransaccion.Item2, infoTransaccion.Item1, "Pago Prestamo");
+
+            }
+
+            MenuManager.GestionarMenuUsuario(usuario);
         }
     }
 }

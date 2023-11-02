@@ -126,5 +126,26 @@ namespace UdemBank
             }
             return transaccionesGrupo;
         }
+
+
+        public static List<int> ObtenerIdGrupos(List<int> idUsuariosxGrupos)
+        {
+            using var db = new Contexto();
+
+            /* List<int> idGrupos = new List<int>();
+             foreach(int idUsuarioxGrupo in idUsuariosxGrupos)
+             {
+                 var grupos = db.UsuariosXGruposAhorros.Where(g => g.id == idUsuarioxGrupo).Select(g => g.id_GrupoAhorro);
+
+                 idGrupos.AddRange(grupos);
+
+
+             }*/
+
+            List<int> idGrupos = db.UsuariosXGruposAhorros.Where(g => idUsuariosxGrupos.Contains(g.id))
+                                                          .Select(g => g.id_GrupoAhorro)
+                                                          .ToList();
+            return idGrupos;
+        }
     }
 }

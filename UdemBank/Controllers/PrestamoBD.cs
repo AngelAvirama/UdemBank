@@ -29,19 +29,21 @@ namespace UdemBank
                 double cantidadPagar = saldoPrestar + (saldoPrestar * 0.03);
                 double cuota = cantidadPagar / meses;
 
-                using var db = new Contexto(); 
-                
-                db.Prestamos.Add(new Prestamo {id_usuarioXGrupoDeAhorro = idUsuarioGrupo,
-                                              cantidadPrestamo = saldoPrestar,
-                                              deudaActual = cantidadPagar,
-                                              cantidadCuota = cuota,
-                                              cantidadAPagar=cantidadPagar,
-                                              fechaPrestamo = fechaActual,
-                                              fechaPlazo = fechaPago,
-                                              interes = 0.03
-                                              });
+                using var db = new Contexto();
+
+                db.Prestamos.Add(new Prestamo
+                {
+                    id_usuarioXGrupoDeAhorro = idUsuarioGrupo,
+                    cantidadPrestamo = saldoPrestar,
+                    deudaActual = cantidadPagar,
+                    cantidadCuota = cuota,
+                    cantidadAPagar = cantidadPagar,
+                    fechaPrestamo = fechaActual,
+                    fechaPlazo = fechaPago,
+                    interes = 0.03
+                });
                 db.SaveChanges();
-                CuentaDeAhorroBD.IngresarCapital(usuario, saldoPrestar,true);
+                CuentaDeAhorroBD.IngresarCapital(usuario, saldoPrestar, true);
                 GrupoDeAhorroBD.QuitarSaldo(grupo.id, saldoPrestar);
 
                 Console.WriteLine("Prestamo Agregado");
@@ -58,7 +60,7 @@ namespace UdemBank
         {
             (double SaldoPrestamo, int idUxG, int cantidadMeses)? tuplaDatos = PrestamoServicios.VerificarPrestamoOtrosGrupos(usuario, grupo); //Una tupla que me retorne el valor y el id usuarioxgrupo, cantidadMeses
 
-            if(tuplaDatos != null)
+            if (tuplaDatos != null)
             {
                 //este codigo tambien hay que organizarlo porque esta repetido excepto por el 0.05
 
@@ -111,6 +113,66 @@ namespace UdemBank
                 .ToList();
 
             return prestamos;
+        }
+
+
+
+        public static List<Prestamo> ObtenerPrestamosVigentes(int idUsuario)
+        {
+            using var db = new Contexto();
+
+            var prestamos = db.Prestamos
+                .Where(p => p.usuarioXGrupoDeAhorro.Usuario.id == idUsuario && p.deudaActual > 0)
+                .ToList();
+
+            return prestamos;
+        }
+
+
+
+        public static List<Prestamo> ObtenerPrestamosUsuarioxGrupo(int idUsuarioxGrupo)
+        {
+            using var db = new Contexto();
+
+            var prestamos = db.Prestamos
+                .Where(p => p.id_usuarioXGrupoDeAhorro == idUsuarioxGrupo && p.deudaActual > 0)
+                .ToList();
+
+            return prestamos;
+
+        }
+
+        public static double ActualizarPago(int idPrestamo)
+        {
+
+
+            using var db = new Contexto();
+
+            var prestamo = db.Prestamos.SingleOrDefault(p => p.id == idPrestamo);
+
+            MostrarInfoPrestamo(prestamo);
+
+            prestamo.deudaActual -= prestamo.cantidadCuota;
+
+            db.SaveChanges();
+
+            Console.WriteLine($"Has pagado ${prestamo.cantidadCuota}");
+
+            return prestamo.cantidadCuota;
+
+
+        }
+
+
+        public static void MostrarInfoPrestamo(Prestamo prestamo)
+        {
+            Console.WriteLine($"Cantidad del prestamo: {prestamo.cantidadPrestamo}\n" +
+                $"Deuda Actual: {prestamo.deudaActual}\n" +
+                $"Cantidad Cuota: {prestamo.cantidadCuota}\n+" +
+                $"Fecha del prestamo {prestamo.fechaPrestamo}\n" +
+                $"Meses a pagar: {prestamo.cantidadAPagar / prestamo.cantidadCuota}\n" +
+                $"Cantidad de meses que has pagado: {(int)Math.Round((prestamo.cantidadAPagar-prestamo.deudaActual)/prestamo.cantidadCuota)}\n" +
+                $"Interes del prestamo: {prestamo.interes}");
         }
     }
 }

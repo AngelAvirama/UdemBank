@@ -33,8 +33,7 @@ namespace UdemBank
 
         enum MenuPagos
         {
-            PagarMisGrupos,
-            PagarOtrosGrupos,
+            PagarMisPrestamos,
             Salir
         }
 
@@ -342,16 +341,14 @@ namespace UdemBank
             new SelectionPrompt<MenuPagos>()
             .Title("Te encuentras en el menu de Pagos, ¿A que tipo de grupo deseas pagarle? ")
             .AddChoices(
-                MenuPagos.PagarMisGrupos,
-                MenuPagos.PagarOtrosGrupos,
+                MenuPagos.PagarMisPrestamos,
                 MenuPagos.Salir));
 
             switch (option)
             {
-                case MenuPagos.PagarMisGrupos:
-                    break;
-                case MenuPagos.PagarOtrosGrupos:
-                    break;
+                case MenuPagos.PagarMisPrestamos:
+                    TransaccionesGrupoAhorroBD.RegistrarPagoPrestamo(usuario);
+                    break;        
                 case MenuPagos.Salir:
                     GestionarMenuUsuario(usuario);
                     break;
