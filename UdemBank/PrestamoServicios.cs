@@ -42,7 +42,9 @@ namespace UdemBank
                 }
             } while (saldoPrestar <= 0);
 
-            return saldoPrestar;
+            double saldoaPrestarSinComision = saldoPrestar * 0.999;
+            Comision.ObtenerComisionDeTransaccion(saldoPrestar);
+            return saldoaPrestarSinComision;
         }
 
         public static void MostrarDatosPrestamo(double saldo, int id, int meses)

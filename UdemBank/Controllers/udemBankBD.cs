@@ -16,5 +16,21 @@ namespace UdemBank.Controllers
             db.udemBanks.Add(new udemBank { comision = 0 });
             db.SaveChanges();
         }
+
+        public static int ContarBancos()
+        {
+            using var db = new Contexto();
+            int CantidadBancos = db.udemBanks.Count();
+            return CantidadBancos;
+        }
+
+        public static void IngresarComisiones(double Comision)
+        {
+            using var db = new Contexto();
+
+            var udemBank = db.udemBanks.FirstOrDefault(ud => ud.id == 1);
+            udemBank.comision += Comision;
+            db.SaveChanges();
+        }
     }
 }

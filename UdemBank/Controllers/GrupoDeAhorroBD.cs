@@ -147,5 +147,33 @@ namespace UdemBank
                 return false;
             }
         }
+
+        public static GrupoDeAhorro IngresarFidelizacion()
+        {
+            using var db = new Contexto();
+
+            var grupos = db.GruposDeAhorros.ToList();
+
+            if (grupos.Count == 0)
+            {
+                Console.WriteLine("No hay grupos de ahorro");
+                MenuManager.GestionarMenuFidelizacion();
+            }
+
+            GrupoDeAhorro grupoConMayorSaldo = grupos[0];
+            foreach (var grupo in grupos)
+            {
+                if (grupo.SaldoGrupo > grupoConMayorSaldo.SaldoGrupo)
+                {
+                    grupoConMayorSaldo = grupo;
+                }
+            }
+
+            double incremento = grupoConMayorSaldo.SaldoGrupo * 0.10;
+            grupoConMayorSaldo.SaldoGrupo += incremento;
+            db.SaveChanges();
+
+            return grupoConMayorSaldo;
+        }
     }
 }

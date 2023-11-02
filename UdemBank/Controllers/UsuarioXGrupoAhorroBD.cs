@@ -65,13 +65,15 @@ namespace UdemBank
 
             if (cuentaDeAhorro.saldo >= saldoIngresado)
             {
-                GrupoDeAhorroBD.IncrementarSaldo(grupoDeAhorro.id, saldoIngresado);
+                double SaldoSinComision = saldoIngresado * 0.999;
+                GrupoDeAhorroBD.IncrementarSaldo(grupoDeAhorro.id, SaldoSinComision);
                 cuentaDeAhorro.saldo -= saldoIngresado;
+                Comision.ObtenerComisionDeTransaccion(saldoIngresado);
 
                 db.SaveChanges();
 
                 int idUsuarioGrupo = ObtenerUsuarioXGrupoId(usuario.id, grupoDeAhorro.id);
-                TransaccionesGrupoAhorroBD.RegistrarTransaccionGrupo(idUsuarioGrupo, saldoIngresado, "Transaccion Grupo de Ahorro");
+                TransaccionesGrupoAhorroBD.RegistrarTransaccionGrupo(idUsuarioGrupo, SaldoSinComision, "Transaccion Grupo de Ahorro");
 
                 Console.WriteLine("Saldo ingresado exitosamente");
                 MenuManager.GestionarMenuGrupoDeAhorro(usuario, grupoDeAhorro);

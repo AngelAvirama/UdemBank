@@ -1,6 +1,5 @@
 ﻿using Spectre.Console;
-
-
+using UdemBank.Controllers;
 
 namespace UdemBank
 {
@@ -8,7 +7,12 @@ namespace UdemBank
     {
         static void Main(string[] args)
         {
-           MenuManager.MainMenuManagement();
+            int CantidadBancos = udemBankBD.ContarBancos();
+            if (CantidadBancos < 1)
+            {
+                udemBankBD.CrearBanco();
+            }
+            MenuManager.MainMenuManagement();
         }
     }
 }

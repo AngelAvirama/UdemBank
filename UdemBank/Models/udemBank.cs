@@ -13,6 +13,6 @@ namespace UdemBank
         public int id { get; set; }
 
         [Required]
-        public int comision { get; set; }
+        public double comision { get; set; }
     }
 }

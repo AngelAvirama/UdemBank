@@ -143,7 +143,7 @@ namespace UdemBank
                     
                     break;
                 case MenuFidelizacion.FidelizacionPorGrupoDeAhorro:
-                    
+                    Fidelizacion.FidelizacionGrupoDeAhorro();
                     break;
                 case MenuFidelizacion.Salir:
                     MainMenuManagement();
