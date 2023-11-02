@@ -20,12 +20,16 @@ namespace UdemBank
             return sumaTransacciones;
         }
 
-        public static void RegistrarTransaccionGrupo(int idUsuarioGrupo, double cantidadTransaccion, string Tipo)
+        public static void RegistrarTransaccionGrupo(int idUsuarioGrupo, double cantidadTransaccion, string Tipo,DateOnly fechaActual = default)
         {
             using var db = new Contexto();
-            //Por ahora
+            
 
-            DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
+            //fechaActual se evalua esta condicion para ver si avanzan los meses del prestamo o si toma la actual
+            if (fechaActual == default)
+            {
+                fechaActual = DateOnly.FromDateTime(DateTime.Now); // Si no se proporciona un valor, se usa la fecha actual
+            }
             db.TransaccionesGruposAhorros.Add(new TransaccionesGrupoAhorro { idUsuarioXGrupo = idUsuarioGrupo, CantidadTransaccion = cantidadTransaccion, fecha =fechaActual, TipoTransaccion = Tipo});
             db.SaveChanges();
         }
@@ -41,7 +45,7 @@ namespace UdemBank
             }
             else
             {
-                RegistrarTransaccionGrupo(infoTransaccion.Item2, infoTransaccion.Item1, "Pago Prestamo");
+                RegistrarTransaccionGrupo(infoTransaccion.Item2, infoTransaccion.Item1, "Pago Prestamo",infoTransaccion.Item3);
 
             }
 

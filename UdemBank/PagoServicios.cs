@@ -10,13 +10,14 @@ namespace UdemBank
     public class PagoServicios
     {
 
-        public static (double,int) RealizarPagoPrestamo(Usuario usuario)
+        public static (double,int,DateOnly) RealizarPagoPrestamo(Usuario usuario)
         {
             var grupos = ObtenerGruposPorPagar(usuario);
 
             if(grupos == null)
             {
-                return (0,0);
+                DateOnly date = default(DateOnly);
+                return (0,0,date);
             }
 
             var idGrupo = SeleccionarGrupoPorPagar(grupos);
@@ -27,9 +28,17 @@ namespace UdemBank
 
             var prestamoSeleccionado = SeleccionarPrestamo(prestamosGrupo);
 
+            Console.WriteLine($"Deuda actual del prestamo: {prestamoSeleccionado.deudaActual}");
+
             double cuota = PrestamoBD.ActualizarPago(prestamoSeleccionado.id);
 
-            return (cuota,relacionUsuarioGrupo);
+            DateOnly fechaDeCuota = PrestamoBD.ObtenerFechaCuota(prestamoSeleccionado.id);
+
+            Console.WriteLine($"El numero de cuota en el que va es: {fechaDeCuota}");
+
+
+
+            return (cuota,relacionUsuarioGrupo,fechaDeCuota);
 
 
         }

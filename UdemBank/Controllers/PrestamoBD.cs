@@ -171,8 +171,23 @@ namespace UdemBank
                 $"Cantidad Cuota: {prestamo.cantidadCuota}\n+" +
                 $"Fecha del prestamo {prestamo.fechaPrestamo}\n" +
                 $"Meses a pagar: {prestamo.cantidadAPagar / prestamo.cantidadCuota}\n" +
-                $"Cantidad de meses que has pagado: {(int)Math.Round((prestamo.cantidadAPagar-prestamo.deudaActual)/prestamo.cantidadCuota)}\n" +
+                $"Cantidad de meses que has pagado: {(int)Math.Round((prestamo.cantidadAPagar - prestamo.deudaActual) / prestamo.cantidadCuota)}\n" +
                 $"Interes del prestamo: {prestamo.interes}");
+        }
+
+        public static DateOnly  ObtenerFechaCuota(int idPrestamo)
+        {
+            using var db = new Contexto();
+
+            var prestamo = db.Prestamos.SingleOrDefault(p => p.id == idPrestamo);
+
+            int numeroCuota = (int)Math.Round((prestamo.cantidadAPagar - prestamo.deudaActual) / prestamo.cantidadCuota);
+
+            DateOnly fechaCuota = prestamo.fechaPrestamo.AddMonths(numeroCuota);
+
+            return fechaCuota;
+
+
         }
     }
 }
