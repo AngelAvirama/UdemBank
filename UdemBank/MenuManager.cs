@@ -14,12 +14,20 @@ namespace UdemBank
         {
             IniciarSesion,
             Registrarse,
+            Fidelizacion,
             Salir
         }
 
         enum MenuRegistrarse
         {
             CrearCuenta,
+            Salir
+        }
+
+        enum MenuFidelizacion
+        {
+            FidelizacionPorUsuario,
+            FidelizacionPorGrupoDeAhorro,
             Salir
         }
 
@@ -77,6 +85,7 @@ namespace UdemBank
                 .AddChoices(
                     MainMenuOptions.IniciarSesion,
                     MainMenuOptions.Registrarse,
+                    MainMenuOptions.Fidelizacion,
                     MainMenuOptions.Salir
                     ));
 
@@ -88,6 +97,9 @@ namespace UdemBank
                     break;
                 case MainMenuOptions.Registrarse:
                     GestionarMenuRegistrarse();
+                    break;
+                case MainMenuOptions.Fidelizacion:
+                    GestionarMenuFidelizacion();
                     break;
                 case MainMenuOptions.Salir:
                     Console.WriteLine("¡Gracias por usar UdemBank!");
@@ -110,6 +122,30 @@ namespace UdemBank
                     UsuarioBD.CrearCuenta();
                     break;
                 case MenuRegistrarse.Salir:
+                    MainMenuManagement();
+                    break;
+            }
+        }
+
+        public static void GestionarMenuFidelizacion()
+        {
+            var option = AnsiConsole.Prompt(
+            new SelectionPrompt<MenuFidelizacion>()
+            .Title("Que quieres hacer?: ")
+            .AddChoices(
+                MenuFidelizacion.FidelizacionPorUsuario,
+                MenuFidelizacion.FidelizacionPorGrupoDeAhorro,
+                MenuFidelizacion.Salir));
+
+            switch (option)
+            {
+                case MenuFidelizacion.FidelizacionPorUsuario:
+                    
+                    break;
+                case MenuFidelizacion.FidelizacionPorGrupoDeAhorro:
+                    
+                    break;
+                case MenuFidelizacion.Salir:
                     MainMenuManagement();
                     break;
             }

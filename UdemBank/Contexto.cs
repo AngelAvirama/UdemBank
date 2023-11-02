@@ -10,6 +10,7 @@ namespace UdemBank
 {
     public class Contexto: DbContext
     {
+        public DbSet<udemBank> udemBanks {  get; set; }
         public DbSet<CuentaDeAhorro> CuentasDeAhorros { get; set; }
 
         public DbSet<GrupoDeAhorro> GruposDeAhorros { get; set; }
