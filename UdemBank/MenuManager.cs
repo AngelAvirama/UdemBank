@@ -26,7 +26,6 @@ namespace UdemBank
 
         enum MenuFidelizacion
         {
-            FidelizacionPorUsuario,
             FidelizacionPorGrupoDeAhorro,
             Salir
         }
@@ -132,15 +131,11 @@ namespace UdemBank
             new SelectionPrompt<MenuFidelizacion>()
             .Title("Que quieres hacer?: ")
             .AddChoices(
-                MenuFidelizacion.FidelizacionPorUsuario,
                 MenuFidelizacion.FidelizacionPorGrupoDeAhorro,
                 MenuFidelizacion.Salir));
 
             switch (option)
             {
-                case MenuFidelizacion.FidelizacionPorUsuario:
-                    
-                    break;
                 case MenuFidelizacion.FidelizacionPorGrupoDeAhorro:
                     Fidelizacion.FidelizacionGrupoDeAhorro();
                     break;
