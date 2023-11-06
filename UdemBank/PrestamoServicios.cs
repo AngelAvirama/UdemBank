@@ -19,6 +19,7 @@ namespace UdemBank
 
             if (verificarCantidad)
             {
+                Comision.ObtenerComisionDeTransaccion(saldoPrestar);
                 var cantidadMeses = SolicitarCantidadMesesPrestamo();
 
                 var tupla = (SaldoPrestamo: saldoPrestar, idUxG: idUsuarioxGrupo, CantidadMeses: cantidadMeses);
@@ -43,7 +44,7 @@ namespace UdemBank
             } while (saldoPrestar <= 0);
 
             double saldoaPrestarSinComision = saldoPrestar * 0.999;
-            Comision.ObtenerComisionDeTransaccion(saldoPrestar);
+            
             return saldoaPrestarSinComision;
         }
 

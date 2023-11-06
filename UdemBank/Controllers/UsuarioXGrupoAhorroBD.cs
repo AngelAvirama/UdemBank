@@ -88,6 +88,15 @@ namespace UdemBank
                 .Where(ug => ug.id_GrupoAhorro == grupoDeAhorro.id)
                 .ToList();
 
+            double saldoGrupo = grupoDeAhorro.SaldoGrupo;
+            double saldoPorUsuario = saldoGrupo / relacionesUsuarioXGrupo.Count;
+
+            foreach (var relacion in relacionesUsuarioXGrupo)
+            {
+                int idUsuario = relacion.id_ParticipanteGrupo;
+                var cuentaDeAhorro = db.CuentasDeAhorros.SingleOrDefault(x => x.id_propietario == idUsuario);
+                cuentaDeAhorro.saldo += saldoPorUsuario;
+            }
             db.UsuariosXGruposAhorros.RemoveRange(relacionesUsuarioXGrupo);
             db.GruposDeAhorros.Remove(grupoDeAhorro);
 

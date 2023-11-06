@@ -51,7 +51,7 @@ namespace UdemBank
             }
             else
             {
-                Console.WriteLine("tupla datos fue null");
+                MenuManager.GestionarMenuUsuario(usuario);
                 return;
             }
         }
@@ -62,14 +62,11 @@ namespace UdemBank
 
             if (tuplaDatos != null)
             {
-                //este codigo tambien hay que organizarlo porque esta repetido excepto por el 0.05
-
-                //Todos estos calculos hay que meterlos en otra funcion 
-                Console.WriteLine("Tupla datos no fue null");
+               
                 double saldoPrestar = tuplaDatos.Value.SaldoPrestamo;
                 int idUsuarioGrupo = tuplaDatos.Value.idUxG;
                 int meses = tuplaDatos.Value.cantidadMeses;
-                Console.WriteLine($"Datos retornados por tupla:saldoprestar:{saldoPrestar}\nidUxG:{idUsuarioGrupo}\nmeses:{meses}");
+                //Console.WriteLine($"Datos retornados por tupla:saldoprestar:{saldoPrestar}\nidUxG:{idUsuarioGrupo}\nmeses:{meses}");
 
                 DateOnly fechaActual = DateOnly.FromDateTime(DateTime.Now);
                 DateOnly fechaPago = DateOnly.FromDateTime(DateTime.Now).AddMonths(meses);
@@ -99,7 +96,8 @@ namespace UdemBank
             }
             else
             {
-                Console.WriteLine("tupla datos para prestamos otrosgrupos fue null");
+                //Console.WriteLine("tupla datos para prestamos otrosgrupos fue null");
+                MenuManager.GestionarMenuUsuario(usuario);
                 return;
             }
         }

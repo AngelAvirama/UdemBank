@@ -14,7 +14,7 @@ namespace UdemBank
         {
             using var db = new Contexto();
             var transacciones = db.TransaccionesGruposAhorros
-                                       .Where(t => t.idUsuarioXGrupo == idUsuarioGrupo && t.TipoTransaccion == "Transaccion").ToList();
+                                       .Where(t => t.idUsuarioXGrupo == idUsuarioGrupo && t.TipoTransaccion == "Transaccion Grupo de Ahorro").ToList();
             double sumaTransacciones = transacciones.Sum(t => t.CantidadTransaccion);
             Console.WriteLine($"Ha aportado: {sumaTransacciones}");
             return sumaTransacciones;

@@ -38,6 +38,7 @@ namespace UdemBank
             {
                 double saldoSinComision = saldoIngresado * 0.999;
                 cuentaDeAhorro.saldo += saldoSinComision;
+                Comision.ObtenerComisionDeTransaccion(saldoIngresado);
                 TransaccionesBD.RegistrarTransaccionCuenta(cuentaDeAhorro.id, saldoSinComision, "Transación cuenta de ahorro");
                 db.SaveChanges();
                 Console.WriteLine("El saldo se ha actualizado correctamente");

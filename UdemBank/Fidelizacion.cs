@@ -17,11 +17,5 @@ namespace UdemBank
             MenuManager.GestionarMenuFidelizacion();
         }
 
-
-        public static void FidelizacionUsuarios()
-        {
-
-        }
-
     }
 }
